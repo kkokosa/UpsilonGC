@@ -6,7 +6,7 @@
 #include "inc\gcinterface.h"
 #include "inc\gcinterface.ee.h"
 
-class CustomGCHandleStore : public IGCHandleStore
+class ZeroGCHandleStore : public IGCHandleStore
 {
 public:
     // Inherited via IGCHandleStore

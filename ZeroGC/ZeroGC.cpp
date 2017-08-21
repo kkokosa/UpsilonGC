@@ -25,8 +25,8 @@ InitializeGarbageCollector(
     /* Out */ GcDacVars* gcDacVars
 )
 {
-    IGCHeap* heap = new CustomGCHeap(clrToGC);
-    IGCHandleManager* handleManager = new CustomGCHandleManager();
+    IGCHeap* heap = new ZeroGCHeap(clrToGC);
+    IGCHandleManager* handleManager = new ZeroGCHandleManager();
     *gcHeap = heap;
     *gcHandleManager = handleManager;
     return true;

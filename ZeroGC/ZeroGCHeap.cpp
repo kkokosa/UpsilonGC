@@ -11,165 +11,166 @@ private:
     DWORD m_SyncBlockValue;
 };
 
-bool CustomGCHeap::IsValidSegmentSize(size_t size)
+bool ZeroGCHeap::IsValidSegmentSize(size_t size)
 {
     return false;
 }
 
-bool CustomGCHeap::IsValidGen0MaxSize(size_t size)
+bool ZeroGCHeap::IsValidGen0MaxSize(size_t size)
 {
     return false;
 }
 
-size_t CustomGCHeap::GetValidSegmentSize(bool large_seg)
+size_t ZeroGCHeap::GetValidSegmentSize(bool large_seg)
 {
     return size_t();
 }
 
-void CustomGCHeap::SetReservedVMLimit(size_t vmlimit)
+void ZeroGCHeap::SetReservedVMLimit(size_t vmlimit)
 {
 }
 
-void CustomGCHeap::WaitUntilConcurrentGCComplete()
+void ZeroGCHeap::WaitUntilConcurrentGCComplete()
 {
 }
 
-bool CustomGCHeap::IsConcurrentGCInProgress()
-{
-    return false;
-}
-
-void CustomGCHeap::TemporaryEnableConcurrentGC()
-{
-}
-
-void CustomGCHeap::TemporaryDisableConcurrentGC()
-{
-}
-
-bool CustomGCHeap::IsConcurrentGCEnabled()
+bool ZeroGCHeap::IsConcurrentGCInProgress()
 {
     return false;
 }
 
-HRESULT CustomGCHeap::WaitUntilConcurrentGCCompleteAsync(int millisecondsTimeout)
+void ZeroGCHeap::TemporaryEnableConcurrentGC()
+{
+}
+
+void ZeroGCHeap::TemporaryDisableConcurrentGC()
+{
+}
+
+bool ZeroGCHeap::IsConcurrentGCEnabled()
+{
+    return false;
+}
+
+HRESULT ZeroGCHeap::WaitUntilConcurrentGCCompleteAsync(int millisecondsTimeout)
 {
     return E_NOTIMPL;
 }
 
-bool CustomGCHeap::FinalizeAppDomain(AppDomain * pDomain, bool fRunFinalizers)
+bool ZeroGCHeap::FinalizeAppDomain(AppDomain * pDomain, bool fRunFinalizers)
 {
     return false;
 }
 
-void CustomGCHeap::SetFinalizeQueueForShutdown(bool fHasLock)
+void ZeroGCHeap::SetFinalizeQueueForShutdown(bool fHasLock)
 {
 }
 
-size_t CustomGCHeap::GetNumberOfFinalizable()
+size_t ZeroGCHeap::GetNumberOfFinalizable()
 {
     return size_t();
 }
 
-bool CustomGCHeap::ShouldRestartFinalizerWatchDog()
+bool ZeroGCHeap::ShouldRestartFinalizerWatchDog()
 {
     return false;
 }
 
-Object * CustomGCHeap::GetNextFinalizable()
+Object * ZeroGCHeap::GetNextFinalizable()
 {
     return nullptr;
 }
 
-void CustomGCHeap::SetFinalizeRunOnShutdown(bool value)
+void ZeroGCHeap::SetFinalizeRunOnShutdown(bool value)
 {
 }
 
-int CustomGCHeap::GetGcLatencyMode()
-{
-    return 0;
-}
-
-int CustomGCHeap::SetGcLatencyMode(int newLatencyMode)
+int ZeroGCHeap::GetGcLatencyMode()
 {
     return 0;
 }
 
-int CustomGCHeap::GetLOHCompactionMode()
+int ZeroGCHeap::SetGcLatencyMode(int newLatencyMode)
 {
     return 0;
 }
 
-void CustomGCHeap::SetLOHCompactionMode(int newLOHCompactionMode)
+int ZeroGCHeap::GetLOHCompactionMode()
+{
+    return 0;
+}
+
+void ZeroGCHeap::SetLOHCompactionMode(int newLOHCompactionMode)
 {
 }
 
-bool CustomGCHeap::RegisterForFullGCNotification(uint32_t gen2Percentage, uint32_t lohPercentage)
+bool ZeroGCHeap::RegisterForFullGCNotification(uint32_t gen2Percentage, uint32_t lohPercentage)
 {
     return false;
 }
 
-bool CustomGCHeap::CancelFullGCNotification()
+bool ZeroGCHeap::CancelFullGCNotification()
 {
     return false;
 }
 
-int CustomGCHeap::WaitForFullGCApproach(int millisecondsTimeout)
+int ZeroGCHeap::WaitForFullGCApproach(int millisecondsTimeout)
 {
     return 0;
 }
 
-int CustomGCHeap::WaitForFullGCComplete(int millisecondsTimeout)
+int ZeroGCHeap::WaitForFullGCComplete(int millisecondsTimeout)
 {
     return 0;
 }
 
-unsigned CustomGCHeap::WhichGeneration(Object * obj)
+unsigned ZeroGCHeap::WhichGeneration(Object * obj)
 {
     return 0;
 }
 
-int CustomGCHeap::CollectionCount(int generation, int get_bgc_fgc_coutn)
+int ZeroGCHeap::CollectionCount(int generation, int get_bgc_fgc_coutn)
 {
     return 0;
 }
 
-int CustomGCHeap::StartNoGCRegion(uint64_t totalSize, bool lohSizeKnown, uint64_t lohSize, bool disallowFullBlockingGC)
+int ZeroGCHeap::StartNoGCRegion(uint64_t totalSize, bool lohSizeKnown, uint64_t lohSize, bool disallowFullBlockingGC)
 {
     return 0;
 }
 
-int CustomGCHeap::EndNoGCRegion()
+int ZeroGCHeap::EndNoGCRegion()
 {
     return 0;
 }
 
-size_t CustomGCHeap::GetTotalBytesInUse()
+size_t ZeroGCHeap::GetTotalBytesInUse()
 {
     return size_t();
 }
 
-HRESULT CustomGCHeap::GarbageCollect(int generation, bool low_memory_p, int mode)
+HRESULT ZeroGCHeap::GarbageCollect(int generation, bool low_memory_p, int mode)
 {
     return NOERROR;
 }
 
-unsigned CustomGCHeap::GetMaxGeneration()
+unsigned ZeroGCHeap::GetMaxGeneration()
 {
     return 0;
 }
 
-void CustomGCHeap::SetFinalizationRun(Object * obj)
+void ZeroGCHeap::SetFinalizationRun(Object * obj)
 {
 }
 
-bool CustomGCHeap::RegisterForFinalization(int gen, Object * obj)
+bool ZeroGCHeap::RegisterForFinalization(int gen, Object * obj)
 {
     return false;
 }
 
-HRESULT CustomGCHeap::Initialize()
+HRESULT ZeroGCHeap::Initialize()
 {
+    // Not used currently
     MethodTable* freeObjectMethodTable = gcToCLR->GetFreeObjectMethodTable();
 
     WriteBarrierParameters args = {};
@@ -177,9 +178,6 @@ HRESULT CustomGCHeap::Initialize()
     args.is_runtime_suspended = true;
     args.requires_upper_bounds_check = false;
     args.card_table = new uint32_t[1];
-#ifdef FEATURE_MANUALLY_MANAGED_CARD_BUNDLES
-    args.card_bundle_table = g_gc_card_bundle_table;
-#endif
     args.lowest_address = reinterpret_cast<uint8_t*>(~0);;
     args.highest_address = reinterpret_cast<uint8_t*>(1);
     args.ephemeral_low = reinterpret_cast<uint8_t*>(~0);
@@ -189,177 +187,177 @@ HRESULT CustomGCHeap::Initialize()
     return NOERROR;
 }
 
-bool CustomGCHeap::IsPromoted(Object * object)
+bool ZeroGCHeap::IsPromoted(Object * object)
 {
     return false;
 }
 
-bool CustomGCHeap::IsHeapPointer(void * object, bool small_heap_only)
+bool ZeroGCHeap::IsHeapPointer(void * object, bool small_heap_only)
 {
     return false;
 }
 
-unsigned CustomGCHeap::GetCondemnedGeneration()
+unsigned ZeroGCHeap::GetCondemnedGeneration()
 {
     return 0;
 }
 
-bool CustomGCHeap::IsGCInProgressHelper(bool bConsiderGCStart)
+bool ZeroGCHeap::IsGCInProgressHelper(bool bConsiderGCStart)
 {
     return false;
 }
 
-unsigned CustomGCHeap::GetGcCount()
+unsigned ZeroGCHeap::GetGcCount()
 {
     return 0;
 }
 
-bool CustomGCHeap::IsThreadUsingAllocationContextHeap(gc_alloc_context * acontext, int thread_number)
+bool ZeroGCHeap::IsThreadUsingAllocationContextHeap(gc_alloc_context * acontext, int thread_number)
 {
     return false;
 }
 
-bool CustomGCHeap::IsEphemeral(Object * object)
+bool ZeroGCHeap::IsEphemeral(Object * object)
 {
     return false;
 }
 
-uint32_t CustomGCHeap::WaitUntilGCComplete(bool bConsiderGCStart)
+uint32_t ZeroGCHeap::WaitUntilGCComplete(bool bConsiderGCStart)
 {
     return uint32_t();
 }
 
-void CustomGCHeap::FixAllocContext(gc_alloc_context * acontext, bool lockp, void * arg, void * heap)
+void ZeroGCHeap::FixAllocContext(gc_alloc_context * acontext, bool lockp, void * arg, void * heap)
 {
 }
 
-size_t CustomGCHeap::GetCurrentObjSize()
+size_t ZeroGCHeap::GetCurrentObjSize()
 {
     return size_t();
 }
 
-void CustomGCHeap::SetGCInProgress(bool fInProgress)
+void ZeroGCHeap::SetGCInProgress(bool fInProgress)
 {
 }
 
-bool CustomGCHeap::RuntimeStructuresValid()
+bool ZeroGCHeap::RuntimeStructuresValid()
 {
     return true;
 }
 
-size_t CustomGCHeap::GetLastGCStartTime(int generation)
+size_t ZeroGCHeap::GetLastGCStartTime(int generation)
 {
     return size_t();
 }
 
-size_t CustomGCHeap::GetLastGCDuration(int generation)
+size_t ZeroGCHeap::GetLastGCDuration(int generation)
 {
     return size_t();
 }
 
-size_t CustomGCHeap::GetNow()
+size_t ZeroGCHeap::GetNow()
 {
     return size_t();
 }
 
-Object * CustomGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t flags)
+Object * ZeroGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t flags)
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
     ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
     return (Object*)(address + 1);
 }
 
-Object * CustomGCHeap::AllocLHeap(size_t size, uint32_t flags)
+Object * ZeroGCHeap::AllocLHeap(size_t size, uint32_t flags)
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
     ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
     return (Object*)(address + 1);
 }
 
-Object * CustomGCHeap::AllocAlign8(gc_alloc_context * acontext, size_t size, uint32_t flags)
+Object * ZeroGCHeap::AllocAlign8(gc_alloc_context * acontext, size_t size, uint32_t flags)
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
     ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
     return (Object*)(address + 1);
 }
 
-void CustomGCHeap::PublishObject(uint8_t * obj)
+void ZeroGCHeap::PublishObject(uint8_t * obj)
 {
 }
 
-void CustomGCHeap::SetWaitForGCEvent()
+void ZeroGCHeap::SetWaitForGCEvent()
 {
 }
 
-void CustomGCHeap::ResetWaitForGCEvent()
+void ZeroGCHeap::ResetWaitForGCEvent()
 {
 }
 
-bool CustomGCHeap::IsObjectInFixedHeap(Object * pObj)
+bool ZeroGCHeap::IsObjectInFixedHeap(Object * pObj)
 {
     return false;
 }
 
-void CustomGCHeap::ValidateObjectMember(Object * obj)
+void ZeroGCHeap::ValidateObjectMember(Object * obj)
 {
 }
 
-Object * CustomGCHeap::NextObj(Object * object)
-{
-    return nullptr;
-}
-
-Object * CustomGCHeap::GetContainingObject(void * pInteriorPtr, bool fCollectedGenOnly)
+Object * ZeroGCHeap::NextObj(Object * object)
 {
     return nullptr;
 }
 
-void CustomGCHeap::DiagWalkObject(Object * obj, walk_fn fn, void * context)
+Object * ZeroGCHeap::GetContainingObject(void * pInteriorPtr, bool fCollectedGenOnly)
+{
+    return nullptr;
+}
+
+void ZeroGCHeap::DiagWalkObject(Object * obj, walk_fn fn, void * context)
 {
 }
 
-void CustomGCHeap::DiagWalkHeap(walk_fn fn, void * context, int gen_number, bool walk_large_object_heap_p)
+void ZeroGCHeap::DiagWalkHeap(walk_fn fn, void * context, int gen_number, bool walk_large_object_heap_p)
 {
 }
 
-void CustomGCHeap::DiagWalkSurvivorsWithType(void * gc_context, record_surv_fn fn, void * diag_context, walk_surv_type type)
+void ZeroGCHeap::DiagWalkSurvivorsWithType(void * gc_context, record_surv_fn fn, void * diag_context, walk_surv_type type)
 {
 }
 
-void CustomGCHeap::DiagWalkFinalizeQueue(void * gc_context, fq_walk_fn fn)
+void ZeroGCHeap::DiagWalkFinalizeQueue(void * gc_context, fq_walk_fn fn)
 {
 }
 
-void CustomGCHeap::DiagScanFinalizeQueue(fq_scan_fn fn, ScanContext * context)
+void ZeroGCHeap::DiagScanFinalizeQueue(fq_scan_fn fn, ScanContext * context)
 {
 }
 
-void CustomGCHeap::DiagScanHandles(handle_scan_fn fn, int gen_number, ScanContext * context)
+void ZeroGCHeap::DiagScanHandles(handle_scan_fn fn, int gen_number, ScanContext * context)
 {
 }
 
-void CustomGCHeap::DiagScanDependentHandles(handle_scan_fn fn, int gen_number, ScanContext * context)
+void ZeroGCHeap::DiagScanDependentHandles(handle_scan_fn fn, int gen_number, ScanContext * context)
 {
 }
 
-void CustomGCHeap::DiagDescrGenerations(gen_walk_fn fn, void * context)
+void ZeroGCHeap::DiagDescrGenerations(gen_walk_fn fn, void * context)
 {
 }
 
-void CustomGCHeap::DiagTraceGCSegments()
+void ZeroGCHeap::DiagTraceGCSegments()
 {
 }
 
-bool CustomGCHeap::StressHeap(gc_alloc_context * acontext)
+bool ZeroGCHeap::StressHeap(gc_alloc_context * acontext)
 {
     return false;
 }
 
-segment_handle CustomGCHeap::RegisterFrozenSegment(segment_info * pseginfo)
+segment_handle ZeroGCHeap::RegisterFrozenSegment(segment_info * pseginfo)
 {
     return segment_handle();
 }
 
-void CustomGCHeap::UnregisterFrozenSegment(segment_handle seg)
+void ZeroGCHeap::UnregisterFrozenSegment(segment_handle seg)
 {
 }

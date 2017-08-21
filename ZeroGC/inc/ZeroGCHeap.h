@@ -6,12 +6,12 @@
 #include "inc\gcinterface.h"
 #include "inc\gcinterface.ee.h"
 
-class CustomGCHeap : public IGCHeap 
+class ZeroGCHeap : public IGCHeap 
 {
 private:
     IGCToCLR* gcToCLR;
 public:
-    CustomGCHeap(IGCToCLR* gcToCLR) 
+    ZeroGCHeap(IGCToCLR* gcToCLR) 
     {
         this->gcToCLR = gcToCLR;
     }

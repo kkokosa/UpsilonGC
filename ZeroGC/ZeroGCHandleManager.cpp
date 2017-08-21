@@ -2,71 +2,71 @@
 #include "inc\ZeroGCHandleManager.h"
 #include "inc\ZeroGCHandleStore.h"
 
-CustomGCHandleStore* g_gcGlobalHandleStore;
+ZeroGCHandleStore* g_gcGlobalHandleStore;
 
-bool CustomGCHandleManager::Initialize()
+bool ZeroGCHandleManager::Initialize()
 {
-    g_gcGlobalHandleStore = new CustomGCHandleStore();
+    g_gcGlobalHandleStore = new ZeroGCHandleStore();
     return true;
 }
 
-void CustomGCHandleManager::Shutdown()
+void ZeroGCHandleManager::Shutdown()
 {
 }
 
-void * CustomGCHandleManager::GetHandleContext(OBJECTHANDLE handle)
+void * ZeroGCHandleManager::GetHandleContext(OBJECTHANDLE handle)
 {
     return (void*)1;
 }
 
-IGCHandleStore * CustomGCHandleManager::GetGlobalHandleStore()
+IGCHandleStore * ZeroGCHandleManager::GetGlobalHandleStore()
 {
     return g_gcGlobalHandleStore;
 }
 
-IGCHandleStore * CustomGCHandleManager::CreateHandleStore(void * context)
+IGCHandleStore * ZeroGCHandleManager::CreateHandleStore(void * context)
 {
     return nullptr;
 }
 
-void CustomGCHandleManager::DestroyHandleStore(IGCHandleStore * store)
+void ZeroGCHandleManager::DestroyHandleStore(IGCHandleStore * store)
 {
 }
 
-OBJECTHANDLE CustomGCHandleManager::CreateGlobalHandleOfType(Object * object, HandleType type)
+OBJECTHANDLE ZeroGCHandleManager::CreateGlobalHandleOfType(Object * object, HandleType type)
 {
     return g_gcGlobalHandleStore->CreateHandleOfType(object, type);
 }
 
-OBJECTHANDLE CustomGCHandleManager::CreateDuplicateHandle(OBJECTHANDLE handle)
+OBJECTHANDLE ZeroGCHandleManager::CreateDuplicateHandle(OBJECTHANDLE handle)
 {
     return OBJECTHANDLE();
 }
 
-void CustomGCHandleManager::DestroyHandleOfType(OBJECTHANDLE handle, HandleType type)
+void ZeroGCHandleManager::DestroyHandleOfType(OBJECTHANDLE handle, HandleType type)
 {
 }
 
-void CustomGCHandleManager::DestroyHandleOfUnknownType(OBJECTHANDLE handle)
+void ZeroGCHandleManager::DestroyHandleOfUnknownType(OBJECTHANDLE handle)
 {
 }
 
-void CustomGCHandleManager::SetExtraInfoForHandle(OBJECTHANDLE handle, HandleType type, void * pExtraInfo)
+void ZeroGCHandleManager::SetExtraInfoForHandle(OBJECTHANDLE handle, HandleType type, void * pExtraInfo)
 {
 }
 
-void * CustomGCHandleManager::GetExtraInfoFromHandle(OBJECTHANDLE handle)
+void * ZeroGCHandleManager::GetExtraInfoFromHandle(OBJECTHANDLE handle)
 {
     return nullptr;
 }
 
-void CustomGCHandleManager::StoreObjectInHandle(OBJECTHANDLE handle, Object * object)
+void ZeroGCHandleManager::StoreObjectInHandle(OBJECTHANDLE handle, Object * object)
 {
     Object** handleObj = (Object**)handle;
     *handleObj = object;
 }
 
-bool CustomGCHandleManager::StoreObjectInHandleIfNull(OBJECTHANDLE handle, Object * object)
+bool ZeroGCHandleManager::StoreObjectInHandleIfNull(OBJECTHANDLE handle, Object * object)
 {
     // TODO: This is not thread-safe    
     Object** handleObj = (Object**)handle;
@@ -78,25 +78,8 @@ bool CustomGCHandleManager::StoreObjectInHandleIfNull(OBJECTHANDLE handle, Objec
     return false;
 }
 
-void CustomGCHandleManager::SetDependentHandleSecondary(OBJECTHANDLE handle, Object * object)
+Object* ZeroGCHandleManager::InterlockedCompareExchangeObjectInHandle(OBJECTHANDLE handle, Object * object, Object * oldObject)
 {
-}
-
-Object * CustomGCHandleManager::GetDependentHandleSecondary(OBJECTHANDLE handle)
-{
-    return nullptr;
-}
-
-Object * CustomGCHandleManager::InterlockedCompareExchangeObjectInHandle(OBJECTHANDLE handle, Object * objectRef, Object * oldObjectRef)
-{
-    // unwrap the objectref we were given
-    Object* object = OBJECTREF_TO_UNCHECKED_OBJECTREF(objectRef);
-    Object* oldObject = OBJECTREF_TO_UNCHECKED_OBJECTREF(oldObjectRef);
-
-    // store the pointer
-    //void* ret = Interlocked::CompareExchangePointer(reinterpret_cast<Object volatile*>(handle), object, oldObject);
-    //if (handle == oldObject) handle = objectRef
-
     // TODO: This is not thread-safe
     Object** handleObject = (Object**)handle;
     if (*handleObject == oldObject)
@@ -106,11 +89,20 @@ Object * CustomGCHandleManager::InterlockedCompareExchangeObjectInHandle(OBJECTH
     return *handleObject;
 }
 
-HandleType CustomGCHandleManager::HandleFetchType(OBJECTHANDLE handle)
+void ZeroGCHandleManager::SetDependentHandleSecondary(OBJECTHANDLE handle, Object * object)
+{
+}
+
+Object * ZeroGCHandleManager::GetDependentHandleSecondary(OBJECTHANDLE handle)
+{
+    return nullptr;
+}
+
+HandleType ZeroGCHandleManager::HandleFetchType(OBJECTHANDLE handle)
 {
     return HandleType();
 }
 
-void CustomGCHandleManager::TraceRefCountedHandles(HANDLESCANPROC callback, uintptr_t param1, uintptr_t param2)
+void ZeroGCHandleManager::TraceRefCountedHandles(HANDLESCANPROC callback, uintptr_t param1, uintptr_t param2)
 {
 }

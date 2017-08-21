@@ -6,7 +6,7 @@
 #include "inc\gcinterface.h"
 #include "inc\gcinterface.ee.h"
 
-class CustomGCHandleManager : public IGCHandleManager
+class ZeroGCHandleManager : public IGCHandleManager
 {
     // Inherited via IGCHandleManager
     virtual bool Initialize() override;
