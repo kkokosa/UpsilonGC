@@ -149,11 +149,6 @@ size_t ZeroGCHeap::GetTotalBytesInUse()
     return size_t();
 }
 
-HRESULT ZeroGCHeap::GarbageCollect(int generation, bool low_memory_p, int mode)
-{
-    return NOERROR;
-}
-
 unsigned ZeroGCHeap::GetMaxGeneration()
 {
     return 0;
@@ -258,6 +253,11 @@ size_t ZeroGCHeap::GetLastGCDuration(int generation)
 size_t ZeroGCHeap::GetNow()
 {
     return size_t();
+}
+
+HRESULT ZeroGCHeap::GarbageCollect(int generation, bool low_memory_p, int mode)
+{
+    return NOERROR;
 }
 
 Object * ZeroGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t flags)
