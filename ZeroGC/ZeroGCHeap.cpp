@@ -189,7 +189,7 @@ bool ZeroGCHeap::IsPromoted(Object * object)
 
 bool ZeroGCHeap::IsHeapPointer(void * object, bool small_heap_only)
 {
-    return false;
+    return object != 0;
 }
 
 unsigned ZeroGCHeap::GetCondemnedGeneration()
@@ -359,5 +359,13 @@ segment_handle ZeroGCHeap::RegisterFrozenSegment(segment_info * pseginfo)
 }
 
 void ZeroGCHeap::UnregisterFrozenSegment(segment_handle seg)
+{
+}
+
+void ZeroGCHeap::ControlEvents(GCEventKeyword keyword, GCEventLevel level)
+{
+}
+
+void ZeroGCHeap::ControlPrivateEvents(GCEventKeyword keyword, GCEventLevel level)
 {
 }

@@ -34,7 +34,7 @@ OBJECTHANDLE ZeroGCHandleStore::CreateDependentHandle(Object * primary, Object *
     return OBJECTHANDLE();
 }
 
-void ZeroGCHandleStore::RelocateAsyncPinnedHandles(IGCHandleStore * pTarget)
+void ZeroGCHandleStore::RelocateAsyncPinnedHandles(IGCHandleStore* pTarget, void(*clearIfComplete)(Object*), void(*setHandle)(Object*, OBJECTHANDLE))
 {
 }
 

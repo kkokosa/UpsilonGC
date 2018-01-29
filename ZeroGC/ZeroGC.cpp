@@ -4,12 +4,7 @@
 #include "inc\ZeroGC.h"
 #include "inc\ZeroGCHeap.h"
 #include "inc\ZeroGCHandleManager.h"
-#include "inc\common.h"
-#include "inc\threads.h"
-#include "inc\appdomain.h"
-#include "inc\methodtable.h"
-#include "inc\gcinterface.h"
-#include "inc\gcinterface.ee.h"
+
 
 #ifdef _MSC_VER
 #define DLLEXPORT __declspec(dllexport)
@@ -17,8 +12,8 @@
 #define DLLEXPORT __attribute__ ((visibility ("default")))
 #endif // _MSC_VER
 
-extern "C" DLLEXPORT bool
-InitializeGarbageCollector(
+extern "C" DLLEXPORT HRESULT
+GC_Initialize(
     /* In */  IGCToCLR* clrToGC,
     /* Out */ IGCHeap** gcHeap,
     /* Out */ IGCHandleManager** gcHandleManager,
@@ -29,5 +24,16 @@ InitializeGarbageCollector(
     IGCHandleManager* handleManager = new ZeroGCHandleManager();
     *gcHeap = heap;
     *gcHandleManager = handleManager;
-    return true;
+    return S_OK;
+}
+
+extern "C" DLLEXPORT void
+GC_VersionInfo(
+    /* Out */ VersionInfo* result
+)
+{
+    result->MajorVersion = GC_INTERFACE_MAJOR_VERSION;
+    result->MinorVersion = GC_INTERFACE_MINOR_VERSION;
+    result->BuildVersion = 0;
+    result->Name = "Zero GC";
 }

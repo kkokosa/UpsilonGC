@@ -1,10 +1,7 @@
 #pragma once
-#include "inc\common.h"
-#include "inc\threads.h"
-#include "inc\appdomain.h"
-#include "inc\methodtable.h"
-#include "inc\gcinterface.h"
-#include "inc\gcinterface.ee.h"
+#include "debugmacros.h"
+#include "gcenv.base.h"
+#include "gcinterface.h"
 
 class ZeroGCHandleManager : public IGCHandleManager
 {

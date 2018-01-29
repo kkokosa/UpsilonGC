@@ -74,6 +74,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>f:\GithubProjects\coreclr\src\inc;f:\GithubProjects\coreclr\src\gc;f:\GithubProjects\coreclr\src\gc\env;f:\GithubProjects\coreclr\src\vm;f:\GithubProjects\coreclr\src\pal\prebuilt\inc;f:\GithubProjects\coreclr\src\strongname\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -83,6 +84,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>f:\GithubProjects\coreclr\src\inc;f:\GithubProjects\coreclr\src\gc;f:\GithubProjects\coreclr\src\gc\env;f:\GithubProjects\coreclr\src\vm;f:\GithubProjects\coreclr\src\pal\prebuilt\inc;f:\GithubProjects\coreclr\src\strongname\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -90,7 +92,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_AMD64_;_DEBUG;CustomGC_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_AMD64_;_DEBUG;CustomGC_EXPORTS;_WINDOWS;_USRDLL;_TARGET_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -153,13 +155,6 @@
     <ClInclude Include="inc\ZeroGCHandleStore.h" />
     <ClInclude Include="inc\ZeroGCHeap.h" />
     <ClInclude Include="inc\ZeroGC.h" />
-    <ClInclude Include="inc\appdomain.h" />
-    <ClInclude Include="inc\common.h" />
-    <ClInclude Include="inc\gcinterface.dac.h" />
-    <ClInclude Include="inc\gcinterface.ee.h" />
-    <ClInclude Include="inc\gcinterface.h" />
-    <ClInclude Include="inc\methodtable.h" />
-    <ClInclude Include="inc\threads.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -170,9 +165,6 @@
     <ClCompile Include="ZeroGCHeap.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="stdafx.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="inc\gcinterface.dacvars.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
