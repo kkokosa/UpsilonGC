@@ -151,7 +151,7 @@ size_t ZeroGCHeap::GetTotalBytesInUse()
 
 unsigned ZeroGCHeap::GetMaxGeneration()
 {
-    return 0;
+    return 1;
 }
 
 void ZeroGCHeap::SetFinalizationRun(Object * obj)
