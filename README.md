@@ -7,4 +7,6 @@ Zero Garbage Collector is the simplest possible implementation that in fact does
 * it is an excellent basis for the development of your own Garbage Collection mechanism. It provides the necessary functionality to make runtime work properly and you can build on top of that.
 * it may be interesting for special use cases like very short living applications or such that almost no allocate memory (you can come up with those concepts as No-alloc or Zero-alloc programming). In such case providing GC overhead is unnecessary and it may be wise to get rid of it. It is like making huge GC.TryStartNoGCRegion over all you application.
 
-You can find detailed description of the project [here](http://tooslowexception.com/zero-garbage-collector-for-net-core)
+You can find detailed description of the project:
+* [Zero Garbage Collector for .NET Core](http://tooslowexception.com/zero-garbage-collector-for-net-core)
+* [Zero Garbage Collector for .NET Core 2.1 and ASP.NET Core 2.1](http://tooslowexception.com/zero-garbage-collector-for-net-core-2-1-and-asp-net-core-2-1/)
