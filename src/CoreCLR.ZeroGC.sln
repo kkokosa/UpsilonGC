@@ -7,6 +7,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZeroGC.Calloc", "ZeroGC.Cal
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZeroGC.BumpPointer", "ZeroGC.BumpPointer\ZeroGC.BumpPointer.vcxproj", "{3B59C454-21D0-44F7-8070-230E31570B66}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ZeroGC", "ZeroGC", "{6EAF5E2B-056C-4F08-9A17-9D890AC9EE29}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0E20BE81-B8E1-429D-984A-C3F1B5F00769}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -34,6 +41,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{178C48F7-50A9-40B0-B2CD-394175F74722} = {6EAF5E2B-056C-4F08-9A17-9D890AC9EE29}
+		{3B59C454-21D0-44F7-8070-230E31570B66} = {6EAF5E2B-056C-4F08-9A17-9D890AC9EE29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F7BBC84D-8460-4586-B3AA-DB6B68391764}
