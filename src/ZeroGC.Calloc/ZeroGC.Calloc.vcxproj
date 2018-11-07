@@ -74,24 +74,24 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\build\ZeroGC.Calloc\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\obj\ZeroGC.Calloc\$(Platform)_$(Configuration)\</IntDir>
-    <IncludePath>f:\GithubProjects\coreclr\src\inc;f:\GithubProjects\coreclr\src\gc;f:\GithubProjects\coreclr\src\gc\env;f:\GithubProjects\coreclr\src\vm;f:\GithubProjects\coreclr\src\pal\prebuilt\inc;f:\GithubProjects\coreclr\src\strongname\inc;$(IncludePath)</IncludePath>
+    <IncludePath>f:\GithubProjects\DotNet\coreclr\src\inc;f:\GithubProjects\DotNet\coreclr\src\gc;f:\GithubProjects\DotNet\coreclr\src\gc\env;f:\GithubProjects\DotNet\coreclr\src\vm;f:\GithubProjects\DotNet\coreclr\src\pal\prebuilt\inc;f:\GithubProjects\DotNet\coreclr\src\strongname\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\build\ZeroGC.Calloc\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\obj\ZeroGC.Calloc\$(Platform)_$(Configuration)\</IntDir>
-    <IncludePath>f:\GithubProjects\coreclr\src\inc;f:\GithubProjects\coreclr\src\gc;f:\GithubProjects\coreclr\src\gc\env;f:\GithubProjects\coreclr\src\vm;f:\GithubProjects\coreclr\src\pal\prebuilt\inc;f:\GithubProjects\coreclr\src\strongname\inc;$(IncludePath)</IncludePath>  </PropertyGroup>
+    <IncludePath>f:\GithubProjects\DotNet\coreclr\src\inc;f:\GithubProjects\DotNet\coreclr\src\gc;f:\GithubProjects\DotNet\coreclr\src\gc\env;f:\GithubProjects\DotNet\coreclr\src\vm;f:\GithubProjects\DotNet\coreclr\src\pal\prebuilt\inc;f:\GithubProjects\DotNet\coreclr\src\strongname\inc;$(IncludePath)</IncludePath>  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)..\build\ZeroGC.Calloc\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\obj\ZeroGC.Calloc\$(Platform)_$(Configuration)\</IntDir>
-    <IncludePath>f:\GithubProjects\coreclr\src\inc;f:\GithubProjects\coreclr\src\gc;f:\GithubProjects\coreclr\src\gc\env;f:\GithubProjects\coreclr\src\vm;f:\GithubProjects\coreclr\src\pal\prebuilt\inc;f:\GithubProjects\coreclr\src\strongname\inc;$(IncludePath)</IncludePath>	
+    <IncludePath>f:\GithubProjects\DotNet\coreclr\src\inc;f:\GithubProjects\DotNet\coreclr\src\gc;f:\GithubProjects\DotNet\coreclr\src\gc\env;f:\GithubProjects\DotNet\coreclr\src\vm;f:\GithubProjects\DotNet\coreclr\src\pal\prebuilt\inc;f:\GithubProjects\DotNet\coreclr\src\strongname\inc;$(IncludePath)</IncludePath>	
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)..\build\ZeroGC.Calloc\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\obj\ZeroGC.Calloc\$(Platform)_$(Configuration)\</IntDir>
-    <IncludePath>f:\GithubProjects\coreclr\src\inc;f:\GithubProjects\coreclr\src\gc;f:\GithubProjects\coreclr\src\gc\env;f:\GithubProjects\coreclr\src\vm;f:\GithubProjects\coreclr\src\pal\prebuilt\inc;f:\GithubProjects\coreclr\src\strongname\inc;$(IncludePath)</IncludePath>
+    <IncludePath>f:\GithubProjects\DotNet\coreclr\src\inc;f:\GithubProjects\DotNet\coreclr\src\gc;f:\GithubProjects\DotNet\coreclr\src\gc\env;f:\GithubProjects\DotNet\coreclr\src\vm;f:\GithubProjects\DotNet\coreclr\src\pal\prebuilt\inc;f:\GithubProjects\DotNet\coreclr\src\strongname\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

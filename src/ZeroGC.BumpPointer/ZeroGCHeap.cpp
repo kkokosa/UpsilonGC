@@ -57,7 +57,7 @@ HRESULT ZeroGCHeap::WaitUntilConcurrentGCCompleteAsync(int millisecondsTimeout)
     return E_NOTIMPL;
 }
 
-bool ZeroGCHeap::FinalizeAppDomain(AppDomain * pDomain, bool fRunFinalizers)
+bool ZeroGCHeap::FinalizeAppDomain(void * pDomain, bool fRunFinalizers)
 {
     return false;
 }
@@ -367,5 +367,17 @@ void ZeroGCHeap::ControlEvents(GCEventKeyword keyword, GCEventLevel level)
 }
 
 void ZeroGCHeap::ControlPrivateEvents(GCEventKeyword keyword, GCEventLevel level)
+{
+}
+
+void ZeroGCHeap::GetMemoryInfo(uint32_t * highMemLoadThreshold, uint64_t * totalPhysicalMem, uint32_t * lastRecordedMemLoad, size_t * lastRecordedHeapSize, size_t * lastRecordedFragmentation)
+{
+}
+
+void ZeroGCHeap::SetSuspensionPending(bool fSuspensionPending)
+{
+}
+
+void ZeroGCHeap::SetYieldProcessorScalingFactor(uint32_t yieldProcessorScalingFactor)
 {
 }

@@ -24,7 +24,7 @@ public:
     virtual void TemporaryDisableConcurrentGC() override;
     virtual bool IsConcurrentGCEnabled() override;
     virtual HRESULT WaitUntilConcurrentGCCompleteAsync(int millisecondsTimeout) override;    // Use in native threads. TRUE if succeed. FALSE if failed or timeout
-    virtual bool FinalizeAppDomain(AppDomain* pDomain, bool fRunFinalizers) override;
+    virtual bool FinalizeAppDomain(void* pDomain, bool fRunFinalizers) override;
     virtual void SetFinalizeQueueForShutdown(bool fHasLock) override;
     virtual size_t GetNumberOfFinalizable() override;
     virtual bool ShouldRestartFinalizerWatchDog() override;
@@ -87,4 +87,7 @@ public:
     virtual void UnregisterFrozenSegment(segment_handle seg) override;
     virtual void ControlEvents(GCEventKeyword keyword, GCEventLevel level) override;
     virtual void ControlPrivateEvents(GCEventKeyword keyword, GCEventLevel level) override;
+	virtual void GetMemoryInfo(uint32_t * highMemLoadThreshold, uint64_t * totalPhysicalMem, uint32_t * lastRecordedMemLoad, size_t * lastRecordedHeapSize, size_t * lastRecordedFragmentation) override;
+	virtual void SetSuspensionPending(bool fSuspensionPending) override;
+	virtual void SetYieldProcessorScalingFactor(uint32_t yieldProcessorScalingFactor) override;
 };
