@@ -264,23 +264,24 @@ Object * ZeroGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t fl
 {
 	int sizeWithHeader = size + sizeof(ObjHeader);
 
-	uint8_t*  result = acontext->alloc_ptr;
-	acontext->alloc_ptr += sizeWithHeader;
-	if (acontext->alloc_ptr <= acontext->alloc_limit)
-	{
-		// Fast path, already zeroed 
-		Object* obj = (Object*)(result + 1);
-		return obj;
-	}
+	//ObjHeader*  result = (ObjHeader*)acontext->alloc_ptr;
+	//acontext->alloc_ptr += sizeWithHeader;
+	//if (acontext->alloc_ptr <= acontext->alloc_limit)
+	//{
+	//	// Fast path, already zeroed 
+	//	return (Object*)(result + 1);
+	//}
 
-	int growthSize = 16 * 1024 * 1024;
-	acontext->alloc_ptr = (uint8_t*)VirtualAlloc(0, growthSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
-	acontext->alloc_limit = acontext->alloc_ptr + growthSize;
-	memset(acontext->alloc_ptr, 0, growthSize);
-	return (Object*)(acontext->alloc_ptr + 1);
-    //int sizeWithHeader = size + sizeof(ObjHeader);
-    //ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
-    //return (Object*)(address + 1);
+	int growthSize = sizeWithHeader;
+	//acontext->alloc_ptr = (uint8_t*)VirtualAlloc(0, growthSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+	acontext->alloc_ptr = (uint8_t*)calloc(growthSize, sizeof(char*));
+	//acontext->alloc_limit = acontext->alloc_ptr + growthSize;
+	//memset(acontext->alloc_ptr, 0, growthSize);
+	ObjHeader* result = (ObjHeader*)acontext->alloc_ptr;
+	return (Object*)(result + 1);
+//    int sizeWithHeader = size + sizeof(ObjHeader);
+//    ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
+//    return (Object*)(address + 1);
 }
 
 Object * ZeroGCHeap::AllocLHeap(size_t size, uint32_t flags)
