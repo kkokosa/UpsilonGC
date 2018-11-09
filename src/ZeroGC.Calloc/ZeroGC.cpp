@@ -32,8 +32,8 @@ GC_VersionInfo(
     /* Out */ VersionInfo* result
 )
 {
-	result->MajorVersion = 1;// GC_INTERFACE_MINOR_VERSION;
-	result->MinorVersion = 2; // GC_INTERFACE_MAJOR_VERSION;
+	result->MajorVersion = GC_INTERFACE_MINOR_VERSION;
+	result->MinorVersion = GC_INTERFACE_MAJOR_VERSION;
     result->BuildVersion = 0;
     result->Name = "Zero GC";
 }
