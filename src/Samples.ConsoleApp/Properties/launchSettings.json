@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "ConsoleApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "COMPlus_GCName": "f:\\GithubProjects\\CoreCLR.ZeroGC\\build\\ZeroGC.Calloc\\x64_Release\\ZeroGC.Calloc.dll",
+        "COMPlus_HeapVerify": "16"
+      }
+    }
+  }
+}

@@ -74,7 +74,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\build\ZeroGC.BumpPointer\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\obj\ZeroGC.BumpPointer\$(Platform)_$(Configuration)\</IntDir>
-    <IncludePath>f:\GithubProjects\DotNet\coreclr\src\inc;f:\GithubProjects\DotNet\coreclr\src\gc;f:\GithubProjects\DotNet\coreclr\src\gc\env;f:\GithubProjects\DotNet\coreclr\src\vm;f:\GithubProjects\DotNet\coreclr\src\pal\prebuilt\inc;f:\GithubProjects\DotNet\coreclr\src\strongname\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(CORECLR_FOR_CUSTOMGC)\src\inc;$(CORECLR_FOR_CUSTOMGC)\src\gc;$(CORECLR_FOR_CUSTOMGC)\src\gc\env;$(CORECLR_FOR_CUSTOMGC)\src\vm;$(CORECLR_FOR_CUSTOMGC)\src\pal\prebuilt\inc;$(CORECLR_FOR_CUSTOMGC)\src\strongname\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
