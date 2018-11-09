@@ -264,7 +264,7 @@ Object * ZeroGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t fl
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
     ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
-    return (Object*)(address + 1);
+	return (Object*)(address + 1);
 }
 
 Object * ZeroGCHeap::AllocLHeap(size_t size, uint32_t flags)
