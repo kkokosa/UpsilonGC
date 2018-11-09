@@ -24,7 +24,8 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "COMPlus_GCName": "f:\\GithubProjects\\CoreCLR.ZeroGC\\build\\ZeroGC.Calloc\\x64_Release\\ZeroGC.Calloc.dll"
+        //"COMPlus_GCName": "f:\\GithubProjects\\CoreCLR.ZeroGC\\build\\ZeroGC.Calloc\\x64_Release\\ZeroGC.Calloc.dll"
+        "COMPlus_GCName": "f:\\GithubProjects\\CoreCLR.ZeroGC\\build\\ZeroGC.BumpPointer\\x64_Debug\\ZeroGC.BumpPointer.dll"
       }
     }
   }

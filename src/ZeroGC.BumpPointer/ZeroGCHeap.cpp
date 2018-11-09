@@ -262,9 +262,25 @@ HRESULT ZeroGCHeap::GarbageCollect(int generation, bool low_memory_p, int mode)
 
 Object * ZeroGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t flags)
 {
-    int sizeWithHeader = size + sizeof(ObjHeader);
-    ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
-    return (Object*)(address + 1);
+	int sizeWithHeader = size + sizeof(ObjHeader);
+
+	uint8_t*  result = acontext->alloc_ptr;
+	acontext->alloc_ptr += sizeWithHeader;
+	if (acontext->alloc_ptr <= acontext->alloc_limit)
+	{
+		// Fast path, already zeroed 
+		Object* obj = (Object*)(result + 1);
+		return obj;
+	}
+
+	int growthSize = 16 * 1024 * 1024;
+	acontext->alloc_ptr = (uint8_t*)VirtualAlloc(0, growthSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+	acontext->alloc_limit = acontext->alloc_ptr + growthSize;
+	memset(acontext->alloc_ptr, 0, growthSize);
+	return (Object*)(acontext->alloc_ptr + 1);
+    //int sizeWithHeader = size + sizeof(ObjHeader);
+    //ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
+    //return (Object*)(address + 1);
 }
 
 Object * ZeroGCHeap::AllocLHeap(size_t size, uint32_t flags)

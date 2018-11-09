@@ -31,7 +31,8 @@ OBJECTHANDLE ZeroGCHandleStore::CreateHandleWithExtraInfo(Object * object, Handl
 
 OBJECTHANDLE ZeroGCHandleStore::CreateDependentHandle(Object * primary, Object * secondary)
 {
-    return OBJECTHANDLE();
+	handles[handlesCount] = (OBJECTHANDLE__*)primary;
+	return (OBJECTHANDLE)&handles[handlesCount++];
 }
 
 void ZeroGCHandleStore::RelocateAsyncPinnedHandles(IGCHandleStore* pTarget, void(*clearIfComplete)(Object*), void(*setHandle)(Object*, OBJECTHANDLE))
