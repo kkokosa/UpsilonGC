@@ -260,6 +260,7 @@ HRESULT ZeroGCHeap::GarbageCollect(int generation, bool low_memory_p, int mode)
     return NOERROR;
 }
 
+// Normally both SOH and LOH allocations go through there
 Object * ZeroGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t flags)
 {
 	uint8_t* result = acontext->alloc_ptr;
@@ -278,6 +279,8 @@ Object * ZeroGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t fl
 	return (Object*)(allocationStart);
 }
 
+// This variation is used in the rare circumstance when you want to allocate an object on the
+// large object heap but the object is not big enough to naturally go there.
 Object * ZeroGCHeap::AllocLHeap(size_t size, uint32_t flags)
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
