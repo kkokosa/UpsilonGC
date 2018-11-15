@@ -262,26 +262,20 @@ HRESULT ZeroGCHeap::GarbageCollect(int generation, bool low_memory_p, int mode)
 
 Object * ZeroGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t flags)
 {
-	int sizeWithHeader = size + sizeof(ObjHeader);
-
-	//ObjHeader*  result = (ObjHeader*)acontext->alloc_ptr;
-	//acontext->alloc_ptr += sizeWithHeader;
-	//if (acontext->alloc_ptr <= acontext->alloc_limit)
-	//{
-	//	// Fast path, already zeroed 
-	//	return (Object*)(result + 1);
-	//}
-
-	int growthSize = sizeWithHeader;
-	//acontext->alloc_ptr = (uint8_t*)VirtualAlloc(0, growthSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
-	acontext->alloc_ptr = (uint8_t*)calloc(growthSize, sizeof(char*));
-	//acontext->alloc_limit = acontext->alloc_ptr + growthSize;
-	//memset(acontext->alloc_ptr, 0, growthSize);
-	ObjHeader* result = (ObjHeader*)acontext->alloc_ptr;
-	return (Object*)(result + 1);
-//    int sizeWithHeader = size + sizeof(ObjHeader);
-//    ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
-//    return (Object*)(address + 1);
+	uint8_t* result = acontext->alloc_ptr;
+	uint8_t* advance = result + size;
+	if (advance <= acontext->alloc_limit)
+	{
+		acontext->alloc_ptr = advance;
+		return (Object* )result;
+	}
+	int beginGap = 24;
+	int growthSize = 16 * 1024 * 1024;
+	uint8_t* newPages = (uint8_t*)VirtualAlloc(NULL, growthSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+	uint8_t* allocationStart = newPages + beginGap;
+	acontext->alloc_ptr = allocationStart + size;
+	acontext->alloc_limit = newPages + growthSize;
+	return (Object*)(allocationStart);
 }
 
 Object * ZeroGCHeap::AllocLHeap(size_t size, uint32_t flags)
