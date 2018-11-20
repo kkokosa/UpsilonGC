@@ -276,6 +276,9 @@ Object * ZeroGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t fl
 	uint8_t* allocationStart = newPages + beginGap;
 	acontext->alloc_ptr = allocationStart + size;
 	acontext->alloc_limit = newPages + growthSize;
+
+	//gcToCLR->EventSink()->FireGCCreateSegment_V1(newPages, growthSize, 0);
+
 	return (Object*)(allocationStart);
 }
 

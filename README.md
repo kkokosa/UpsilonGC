@@ -13,6 +13,10 @@ Zero Garbage Collector is the simplest possible implementation that in fact does
 
 It is super important to set the GC to workstation mode, instead of Server mode. As explained in articles below, even in custom GC the difference between Workstation and Server should be irreleveant, this setting influece how runtime handles write barriers. In case of Server GC it will end in StackOverflowException or any other nasty crash.
 
+## Load testing
+
+sb -u http://localhost:5000/api/values -c 60 -n 40000 -y 10 -W 60
+
 You can find detailed description of the project:
 * [Zero Garbage Collector for .NET Core](http://tooslowexception.com/zero-garbage-collector-for-net-core)
 * [Zero Garbage Collector for .NET Core 2.1 and ASP.NET Core 2.1](http://tooslowexception.com/zero-garbage-collector-for-net-core-2-1-and-asp-net-core-2-1/)

@@ -263,21 +263,21 @@ HRESULT ZeroGCHeap::GarbageCollect(int generation, bool low_memory_p, int mode)
 Object * ZeroGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t flags)
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
-    ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
+    ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char));
 	return (Object*)(address + 1);
 }
 
 Object * ZeroGCHeap::AllocLHeap(size_t size, uint32_t flags)
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
-    ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
+    ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char));
     return (Object*)(address + 1);
 }
 
 Object * ZeroGCHeap::AllocAlign8(gc_alloc_context * acontext, size_t size, uint32_t flags)
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
-    ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
+    ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char));
     return (Object*)(address + 1);
 }
 
