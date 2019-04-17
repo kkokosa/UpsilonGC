@@ -222,7 +222,7 @@ uint32_t ZeroGCHeap::WaitUntilGCComplete(bool bConsiderGCStart)
     return uint32_t();
 }
 
-void ZeroGCHeap::FixAllocContext(gc_alloc_context * acontext, bool lockp, void * arg, void * heap)
+void ZeroGCHeap::FixAllocContext(gc_alloc_context* acontext, void* arg, void* heap)
 {
 }
 
@@ -378,6 +378,11 @@ void ZeroGCHeap::SetSuspensionPending(bool fSuspensionPending)
 {
 }
 
-void ZeroGCHeap::SetYieldProcessorScalingFactor(uint32_t yieldProcessorScalingFactor)
+void ZeroGCHeap::SetYieldProcessorScalingFactor(float yieldProcessorScalingFactor)
 {
+}
+
+bool ZeroGCHeap::IsInFrozenSegment(Object * object)
+{
+	return false;
 }

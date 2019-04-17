@@ -56,7 +56,7 @@ public:
     virtual bool IsThreadUsingAllocationContextHeap(gc_alloc_context* acontext, int thread_number) override;
     virtual bool IsEphemeral(Object* object) override;
     virtual uint32_t WaitUntilGCComplete(bool bConsiderGCStart = false) override;
-    virtual void FixAllocContext(gc_alloc_context* acontext, bool lockp, void* arg, void* heap) override;
+	virtual void FixAllocContext(gc_alloc_context* acontext, void* arg, void* heap) override;
     virtual size_t GetCurrentObjSize() override;
     virtual void SetGCInProgress(bool fInProgress) override;
     virtual bool RuntimeStructuresValid() override;
@@ -89,5 +89,6 @@ public:
     virtual void ControlPrivateEvents(GCEventKeyword keyword, GCEventLevel level) override;
 	virtual void GetMemoryInfo(uint32_t * highMemLoadThreshold, uint64_t * totalPhysicalMem, uint32_t * lastRecordedMemLoad, size_t * lastRecordedHeapSize, size_t * lastRecordedFragmentation) override;
 	virtual void SetSuspensionPending(bool fSuspensionPending) override;
-	virtual void SetYieldProcessorScalingFactor(uint32_t yieldProcessorScalingFactor) override;
+	virtual void SetYieldProcessorScalingFactor(float yieldProcessorScalingFactor) override;
+	virtual bool IsInFrozenSegment(Object * object) override;
 };
