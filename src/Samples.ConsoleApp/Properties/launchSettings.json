@@ -2,6 +2,7 @@
   "profiles": {
     "ConsoleApp": {
       "commandName": "Project",
+      "nativeDebugging": true,
       "environmentVariables": {
         "COMPlus_GCName": "f:\\GithubProjects\\CoreCLR.ZeroGC\\build\\ZeroGC.BumpPointer\\x64_Debug\\ZeroGC.BumpPointer.dll",
         "COMPlus_HeapVerify": "16"
