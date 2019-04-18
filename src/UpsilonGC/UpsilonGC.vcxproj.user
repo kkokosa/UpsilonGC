@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LocalDebuggerEnvironment>COMPlus_GCName=UpsilonGC.dll
+COMPlus_HeapVerify=16
+$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerWorkingDirectory>F:\GithubProjects\CoreCLR.ZeroGC\src\Samples.ConsoleApp\bin\Debug\netcoreapp3.0\win-x64\publish\</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerCommand>ConsoleApp.exe</LocalDebuggerCommand>
+  </PropertyGroup>
+</Project>

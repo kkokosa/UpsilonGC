@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ShowAllFiles>true</ShowAllFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LocalDebuggerCommand>ConsoleApp.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments>
+    </LocalDebuggerCommandArguments>
+    <LocalDebuggerEnvironment>COMPlus_GCName=ZeroGC.BumpPointer.dll
+$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
+    <LocalDebuggerWorkingDirectory>F:\GithubProjects\CoreCLR.ZeroGC\src\Samples.ConsoleApp\bin\Debug\netcoreapp3.0\win-x64\publish\</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerDebuggerType>Auto</LocalDebuggerDebuggerType>
+    <LocalDebuggerAttach>false</LocalDebuggerAttach>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LocalDebuggerCommand>F:\GithubProjects\coreclr\bin\Product\Windows_NT.x64.Debug\CoreRun.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments>F:\GithubProjects\NetMemoryBook\Projects\CoreCLR.General\CoreCLR.HelloWorld\bin\x64\Release\netcoreapp2.0\CoreCLR.HelloWorld.dll</LocalDebuggerCommandArguments>
+    <LocalDebuggerEnvironment>COMPlus_GCName=f:\GithubProjects\CoreCLR.ZeroGC\bin\x64\Debug\ZeroGC.dll
+COMPlus_HeapVerify=16</LocalDebuggerEnvironment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LocalDebuggerCommand>f:\dotnetcli\dotnet.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments> run -c Release</LocalDebuggerCommandArguments>
+    <LocalDebuggerEnvironment>COMPlus_GCName=f:\GithubProjects\CoreCLR.ZeroGC\x64\Release\ZeroGC.dll
+CORECLR_SERVER_GC=0</LocalDebuggerEnvironment>
+    <LocalDebuggerWorkingDirectory>F:\GithubProjects\NetMemoryBook\Projects\CoreCLR.General\CoreCLR.WebApi</LocalDebuggerWorkingDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LocalDebuggerCommand>f:\dotnetcli\dotnet.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments> run -c Release</LocalDebuggerCommandArguments>
+    <LocalDebuggerEnvironment>COMPlus_GCName=f:\GithubProjects\CoreCLR.ZeroGC\x64\Release\ZeroGC.dll
+CORECLR_SERVER_GC=0</LocalDebuggerEnvironment>
+    <LocalDebuggerWorkingDirectory>F:\GithubProjects\NetMemoryBook\Projects\CoreCLR.General\CoreCLR.WebApi</LocalDebuggerWorkingDirectory>
+  </PropertyGroup>
+</Project>
