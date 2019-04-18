@@ -6,7 +6,10 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var coreAssemblyInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(typeof(object).Assembly.Location);
+            Console.WriteLine($"Hello World from Core {coreAssemblyInfo.ProductVersion}");
+            Console.WriteLine($"The location is {typeof(object).Assembly.Location}");
+
             Console.ReadKey();
         }
     }

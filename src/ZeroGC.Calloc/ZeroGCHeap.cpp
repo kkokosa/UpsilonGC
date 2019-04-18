@@ -381,8 +381,3 @@ void ZeroGCHeap::SetSuspensionPending(bool fSuspensionPending)
 void ZeroGCHeap::SetYieldProcessorScalingFactor(float yieldProcessorScalingFactor)
 {
 }
-
-bool ZeroGCHeap::IsInFrozenSegment(Object * object)
-{
-	return false;
-}

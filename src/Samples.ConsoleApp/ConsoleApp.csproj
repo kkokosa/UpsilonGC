@@ -3,6 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <!--<RuntimeFrameworkVersion>3.0.0-preview3-27422-72</RuntimeFrameworkVersion>-->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <Platforms>x64;x86</Platforms>
   </PropertyGroup>
 
