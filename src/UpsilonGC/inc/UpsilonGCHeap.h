@@ -63,7 +63,7 @@ public:
     virtual size_t GetLastGCStartTime(int generation) override;
     virtual size_t GetLastGCDuration(int generation) override;
     virtual size_t GetNow() override;
-    virtual Object* Alloc(gc_alloc_context* acontext, size_t size, uint32_t flags) override;
+	virtual Object* Alloc(gc_alloc_context* acontext, size_t size, uint32_t flags) override;
     virtual Object* AllocLHeap(size_t size, uint32_t flags) override;
     virtual Object* AllocAlign8(gc_alloc_context* acontext, size_t size, uint32_t flags) override;
     virtual void PublishObject(uint8_t* obj) override;
@@ -90,4 +90,6 @@ public:
 	virtual void GetMemoryInfo(uint32_t * highMemLoadThreshold, uint64_t * totalPhysicalMem, uint32_t * lastRecordedMemLoad, size_t * lastRecordedHeapSize, size_t * lastRecordedFragmentation) override;
 	virtual void SetSuspensionPending(bool fSuspensionPending) override;
 	virtual void SetYieldProcessorScalingFactor(float yieldProcessorScalingFactor) override;
+
+	void registerSegment(uint8_t* new_pages);
 };

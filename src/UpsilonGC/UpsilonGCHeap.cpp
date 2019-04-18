@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "inc\UpsilonGCHeap.h"
 
+const int GrowthSize = 16 * 1024 * 1024;
+
+int segmentsCount = 0;
+uint8_t* segments[128];
+
+
 class ObjHeader
 {
 private:
@@ -188,7 +194,16 @@ bool UpsilonGCHeap::IsPromoted(Object * object)
 
 bool UpsilonGCHeap::IsHeapPointer(void * object, bool small_heap_only)
 {
-    return object != 0;
+	if (segmentsCount == 0)
+		return false;
+	for (int i = 0; i < segmentsCount; ++i)
+	{
+		uint8_t* address = (uint8_t*)object;
+		if (address >= segments[i] &&
+			address < segments[i] + GrowthSize)
+			return true;
+	}
+    return false;
 }
 
 unsigned UpsilonGCHeap::GetCondemnedGeneration()
@@ -270,12 +285,13 @@ Object * UpsilonGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t
 		return (Object* )result;
 	}
 	int beginGap = 24;
-	int growthSize = 16 * 1024 * 1024;
-	uint8_t* newPages = (uint8_t*)VirtualAlloc(NULL, growthSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+	
+	uint8_t* newPages = (uint8_t*)VirtualAlloc(NULL, GrowthSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
 	uint8_t* allocationStart = newPages + beginGap;
 	acontext->alloc_ptr = allocationStart + size;
-	acontext->alloc_limit = newPages + growthSize;
+	acontext->alloc_limit = newPages + GrowthSize;
 
+	registerSegment(newPages);
 	//gcToCLR->EventSink()->FireGCCreateSegment_V1(newPages, growthSize, 0);
 
 	return (Object*)(allocationStart);
@@ -396,4 +412,9 @@ void UpsilonGCHeap::SetSuspensionPending(bool fSuspensionPending)
 
 void UpsilonGCHeap::SetYieldProcessorScalingFactor(float yieldProcessorScalingFactor)
 {
+}
+
+void UpsilonGCHeap::registerSegment(uint8_t* new_pages)
+{
+	segments[segmentsCount++] = new_pages;
 }
