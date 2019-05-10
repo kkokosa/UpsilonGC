@@ -5,7 +5,7 @@
 COMPlus_HeapVerify=16
 $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerWorkingDirectory>F:\GithubProjects\CoreCLR.ZeroGC\src\Samples.ConsoleApp\bin\Debug\netcoreapp3.0\win-x64\publish\</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>f:\GithubProjects\CoreCLR.ZeroGC\src\Samples.ConsoleApp\published\Debug\netcoreapp3.0\win-x64\</LocalDebuggerWorkingDirectory>
     <LocalDebuggerCommand>ConsoleApp.exe</LocalDebuggerCommand>
   </PropertyGroup>
 </Project>

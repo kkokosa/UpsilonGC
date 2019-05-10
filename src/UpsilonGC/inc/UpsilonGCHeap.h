@@ -92,4 +92,8 @@ public:
 	virtual void SetYieldProcessorScalingFactor(float yieldProcessorScalingFactor) override;
 
 	void registerSegment(uint8_t* new_pages);
+
+	static void MarkStackRoots(Object** ppObject, ScanContext* sc, uint32_t flags);
+
+	static bool gcInProgress;
 };

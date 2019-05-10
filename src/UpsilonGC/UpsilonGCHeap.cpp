@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "inc\UpsilonGCHeap.h"
+#include <stdio.h>
 
-const int GrowthSize = 16 * 1024 * 1024;
+const int GrowthSize = 1 * 1024 * 1024;
 
 int segmentsCount = 0;
-uint8_t* segments[128];
+uint8_t* segments[1024];
 
 
 class ObjHeader
@@ -15,6 +16,29 @@ private:
 #endif // _WIN64
     DWORD m_SyncBlockValue;
 };
+
+class Object
+{
+	MethodTable* m_pMethTab;
+
+public:
+	ObjHeader* GetHeader()
+	{
+		return ((ObjHeader*)this) - 1;
+	}
+
+	MethodTable* RawGetMethodTable() const
+	{
+		return m_pMethTab;
+	}
+
+	void RawSetMethodTable(MethodTable* pMT)
+	{
+		m_pMethTab = pMT;
+	}
+};
+
+bool UpsilonGCHeap::gcInProgress = false;
 
 bool UpsilonGCHeap::IsValidSegmentSize(size_t size)
 {
@@ -213,7 +237,7 @@ unsigned UpsilonGCHeap::GetCondemnedGeneration()
 
 bool UpsilonGCHeap::IsGCInProgressHelper(bool bConsiderGCStart)
 {
-    return false;
+    return gcInProgress;
 }
 
 unsigned UpsilonGCHeap::GetGcCount()
@@ -223,7 +247,7 @@ unsigned UpsilonGCHeap::GetGcCount()
 
 bool UpsilonGCHeap::IsThreadUsingAllocationContextHeap(gc_alloc_context * acontext, int thread_number)
 {
-    return false;
+    return acontext->alloc_limit != nullptr;
 }
 
 bool UpsilonGCHeap::IsEphemeral(Object * object)
@@ -247,6 +271,7 @@ size_t UpsilonGCHeap::GetCurrentObjSize()
 
 void UpsilonGCHeap::SetGCInProgress(bool fInProgress)
 {
+	gcInProgress = fInProgress;
 }
 
 bool UpsilonGCHeap::RuntimeStructuresValid()
@@ -284,17 +309,35 @@ Object * UpsilonGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t
 		acontext->alloc_ptr = advance;
 		return (Object* )result;
 	}
+	if (acontext->alloc_limit != nullptr)
+	{
+		// Some allocation context filled, start GC
+		gcInProgress = true;
+		ScanContext sc;
+		gcToCLR->SuspendEE(SUSPEND_FOR_GC);
+		//gcToCLR->DisablePreemptiveGC();
+		gcToCLR->GcScanRoots(UpsilonGCHeap::MarkStackRoots, 0, 0, &sc);
+		//gcInProgress = false;
+		gcToCLR->RestartEE(true);
+	}
 	int beginGap = 24;
-	
 	uint8_t* newPages = (uint8_t*)VirtualAlloc(NULL, GrowthSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
 	uint8_t* allocationStart = newPages + beginGap;
 	acontext->alloc_ptr = allocationStart + size;
 	acontext->alloc_limit = newPages + GrowthSize;
-
 	registerSegment(newPages);
+	printf("GCLOG: Segment crated %p-%p\r\n", acontext->alloc_ptr, acontext->alloc_limit);
 	//gcToCLR->EventSink()->FireGCCreateSegment_V1(newPages, growthSize, 0);
-
 	return (Object*)(allocationStart);
+}
+
+void UpsilonGCHeap::MarkStackRoots(Object** ppObject, ScanContext* sc, uint32_t flags)
+{
+	uint8_t* o = (uint8_t*)* ppObject;
+	if (o == 0)
+		return;
+	MethodTable* pMT = (*ppObject)->RawGetMethodTable();
+	printf("GCLOG: Reachable at %p MT %p\r\n", o, pMT);
 }
 
 // This variation is used in the rare circumstance when you want to allocate an object on the
