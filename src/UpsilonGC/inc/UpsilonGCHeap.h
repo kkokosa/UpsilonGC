@@ -7,12 +7,13 @@
 class UpsilonGCHeap : public IGCHeap 
 {
 private:
-    IGCToCLR* gcToCLR;
 	UpsilonGCHandleManager* handleManager;
 public:
+	static IGCToCLR* gcToCLR;
+
 	UpsilonGCHeap(IGCToCLR* gcToCLR, UpsilonGCHandleManager* handleManager)
     {
-        this->gcToCLR = gcToCLR;
+		UpsilonGCHeap::gcToCLR = gcToCLR;
 		this->handleManager = handleManager;
     }
 
@@ -98,6 +99,7 @@ public:
 
 	void ScanHandles(promote_func* pf, ScanContext* sc);
 
-	static void MarkReachable(Object** ppObject, ScanContext* sc, uint32_t flags);
+	static void MarkReachableRoot(Object** ppObject, ScanContext* sc, uint32_t flags);
+	static void MarkObjectTransitively(Object* obj);
 	static bool gcInProgress;
 };

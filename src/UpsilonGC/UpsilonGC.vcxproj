@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="gcdesc.h" />
     <ClInclude Include="inc\UpsilonGCHandleManager.h" />
     <ClInclude Include="inc\UpsilonGCHandleStore.h" />
     <ClInclude Include="inc\UpsilonGCHeap.h" />

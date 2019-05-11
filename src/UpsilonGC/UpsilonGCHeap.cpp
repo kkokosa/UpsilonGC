@@ -1,18 +1,22 @@
 #include "stdafx.h"
 #include "inc\UpsilonGCHeap.h"
 #include <stdio.h>
+#include <cassert>
+#include "gcdesc.h"
+#include <cstddef>
 
 const int GrowthSize = 1 * 1024 * 1024;
 
 int segmentsCount = 0;
 uint8_t* segments[1024];
 
+#define GC_MARKED       (size_t)0x1
 
 class ObjHeader
 {
 private:
 #ifdef _WIN64
-    DWORD    m_alignpad;
+    DWORD m_alignpad;
 #endif // _WIN64
     DWORD m_SyncBlockValue;
 };
@@ -20,11 +24,17 @@ private:
 class Object
 {
 	MethodTable* m_pMethTab;
+	uint32_t m_dwLength;
 
 public:
 	ObjHeader* GetHeader()
 	{
 		return ((ObjHeader*)this) - 1;
+	}
+
+	MethodTable* GetMethodTable() const
+	{
+		return ((MethodTable*)(((size_t)RawGetMethodTable()) & (~(GC_MARKED))));
 	}
 
 	MethodTable* RawGetMethodTable() const
@@ -36,9 +46,91 @@ public:
 	{
 		m_pMethTab = pMT;
 	}
+
+	bool IsMarked()
+	{
+		return !!(((size_t)RawGetMethodTable()) & GC_MARKED);
+	}
+
+	void SetMarked()
+	{
+		RawSetMethodTable((MethodTable*)(((size_t)RawGetMethodTable()) | GC_MARKED));
+	}
+
+	void ClearMarked()
+	{
+		RawSetMethodTable(GetMethodTable());
+	}
+
+	uint32_t GetNumComponents()
+	{
+		//assert(GetMethodTable()->HasComponentSize())
+		return m_dwLength;
+	}
+};
+
+#define MTFlag_ContainsPointers     0x0100
+#define MTFlag_HasCriticalFinalizer 0x0800
+#define MTFlag_HasFinalizer         0x0010
+#define MTFlag_IsArray              0x0008
+#define MTFlag_Collectible          0x1000
+#define MTFlag_HasComponentSize     0x8000
+
+/*
+ * The whole MethodTable is a part of EE-GC contract, we cannot change the layout or
+ * masks used here.
+ */
+class MethodTable
+{
+private:
+	uint16_t    m_componentSize;
+	uint16_t    m_flags;
+	uint32_t    m_baseSize;
+	MethodTable* m_pRelatedType; // parent
+
+	//const uint16_t MTFlag_ContainsPointers = 0x0100;
+	//const uint16_t MTFlag_HasCriticalFinalizer = 0x0800;
+	//const uint16_t MTFlag_HasFinalizer = 0x0010;
+	//const uint16_t MTFlag_IsArray = 0x0008;
+	//const uint16_t MTFlag_Collectible = 0x1000;
+	//const uint16_t MTFlag_HasComponentSize = 0x8000;
+
+public:
+	uint32_t GetBaseSize()
+	{
+		return m_baseSize;
+	}
+
+	uint16_t GetComponentSize()
+	{
+		return m_componentSize;
+	}
+
+	static uint32_t GetTotalSize(Object* obj)
+	{
+		MethodTable* mT = obj->GetMethodTable();
+		return (mT->GetBaseSize() + 
+	 	        (mT->HasComponentSize() ? (obj->GetNumComponents() * mT->GetComponentSize()) : 0));
+	}
+
+	bool ContainsPointers()
+	{
+		return (m_flags & MTFlag_ContainsPointers) != 0;
+	}
+
+	bool IsCollectible()
+	{
+		return (m_flags & MTFlag_Collectible) != 0;
+	}
+
+	bool HasComponentSize()
+	{
+		return (m_flags & MTFlag_HasComponentSize) != 0;
+	}
 };
 
 bool UpsilonGCHeap::gcInProgress = false;
+IGCToCLR* UpsilonGCHeap::gcToCLR = nullptr;
 
 bool UpsilonGCHeap::IsValidSegmentSize(size_t size)
 {
@@ -316,9 +408,9 @@ Object * UpsilonGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t
 		ScanContext sc;
 		gcToCLR->SuspendEE(SUSPEND_FOR_GC);
 		printf("GCLOG: Scan stack roots\n");
-		gcToCLR->GcScanRoots(UpsilonGCHeap::MarkReachable, 0, 0, &sc);
+		gcToCLR->GcScanRoots(UpsilonGCHeap::MarkReachableRoot, 0, 0, &sc);
 		printf("GCLOG: Scan handles roots\n");
-		handleManager->ScanHandles(UpsilonGCHeap::MarkReachable, &sc);
+		handleManager->ScanHandles(UpsilonGCHeap::MarkReachableRoot, &sc);
 		gcToCLR->RestartEE(true);
 	}
 	int beginGap = 24;
@@ -333,13 +425,69 @@ Object * UpsilonGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t
 	return (Object*)(allocationStart);
 }
 
-void UpsilonGCHeap::MarkReachable(Object** ppObject, ScanContext* sc, uint32_t flags)
+void UpsilonGCHeap::MarkReachableRoot(Object** ppObject, ScanContext* sc, uint32_t flags)
 {
-	uint8_t* o = (uint8_t*)* ppObject;
-	if (o == 0)
+	Object* obj = *ppObject;
+	if (obj == nullptr)
 		return;
-	MethodTable* pMT = (*ppObject)->RawGetMethodTable();
-	printf("GCLOG: Reachable at %p MT %p (flags: %d)\n", o, pMT, flags);
+	MethodTable* pMT = (*ppObject)->GetMethodTable();	
+	printf("GCLOG: Reachable root at %p MT %p (flags: %d)\n", obj, pMT, flags);
+	//MarkObjectTransitively(obj);
+}
+
+void UpsilonGCHeap::MarkObjectTransitively(Object* obj)
+{
+	if (obj->IsMarked())
+	{
+		printf("GCLOG:    Mark - already marked\n");
+		return;
+	}
+	obj->SetMarked();
+	MethodTable* pMT = obj->RawGetMethodTable();
+	if (pMT->IsCollectible())
+	{
+		printf("GCLOG:    Mark - collectible type\n");
+		// TODO
+		uint8_t* class_obj = gcToCLR->GetLoaderAllocatorObjectForGC(obj);                             
+		uint8_t** poo = &class_obj;
+		uint8_t* oo = *poo;
+		// exp
+	}
+	if (pMT->ContainsPointers())
+	{
+		printf("GCLOG:    Mark - containing pointers type at %p MT %p\n", obj, pMT);
+		int start_useful = 0;
+		uint8_t* start = (uint8_t*)obj;
+		uint32_t size = MethodTable::GetTotalSize(obj);
+		CGCDesc* map = CGCDesc::GetCGCDescFromMT(pMT);
+		CGCDescSeries* cur = map->GetHighestSeries();
+		ptrdiff_t cnt = (ptrdiff_t)map->GetNumSeries();
+		if (cnt >= 0)
+		{
+			CGCDescSeries* last = map->GetLowestSeries();
+			uint8_t** parm = 0;
+			do
+			{
+				assert(parm <= (uint8_t**)((obj)+cur->GetSeriesOffset()));
+				parm = (uint8_t * *)((obj)+cur->GetSeriesOffset());
+				uint8_t** ppstop = (uint8_t * *)((uint8_t*)parm + cur->GetSeriesSize() + (size));
+				if (!start_useful || (uint8_t*)ppstop > (start))
+				{
+					if (start_useful && (uint8_t*)parm < (start)) parm = (uint8_t * *)(start);
+					while (parm < ppstop)                                       
+					{
+						//exp
+						parm++;
+					}
+				}
+				cur--;
+			} while (cur >= last);
+		}
+		else
+		{
+			/* Handle the repeating case - array of valuetypes */
+		}
+	}
 }
 
 // This variation is used in the rare circumstance when you want to allocate an object on the
