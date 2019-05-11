@@ -20,9 +20,9 @@ GC_Initialize(
     /* Out */ GcDacVars* gcDacVars
 )
 {
-    IGCHeap* heap = new UpsilonGCHeap(clrToGC);
-    IGCHandleManager* handleManager = new UpsilonGCHandleManager();
-    *gcHeap = heap;
+	auto handleManager = new UpsilonGCHandleManager();
+	auto heap = new UpsilonGCHeap(clrToGC, handleManager);
+	*gcHeap = heap;
     *gcHandleManager = handleManager;
     return S_OK;
 }

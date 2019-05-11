@@ -32,10 +32,10 @@ namespace ConsoleApp
                 str += i.ToString();
                 str += "</tag>";
             }
-            Console.WriteLine(str);
+            Console.WriteLine($"Run some allocs to build string with {str.Length} chars");
             long endAllocs = GC.GetAllocatedBytesForCurrentThread();
-            Console.WriteLine($"Allocated {endAllocs - beginAllocs}");
-            Console.WriteLine($"Total allocated {endAllocs}");
+            Console.WriteLine($"   Allocated {endAllocs - beginAllocs}");
+            Console.WriteLine($"   Total allocated {endAllocs}");
         }
     }
 }

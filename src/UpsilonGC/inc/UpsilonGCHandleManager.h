@@ -5,7 +5,7 @@
 
 class UpsilonGCHandleManager : public IGCHandleManager
 {
-    // Inherited via IGCHandleManager
+	// Inherited via IGCHandleManager
     virtual bool Initialize() override;
     virtual void Shutdown() override;
     virtual void * GetHandleContext(OBJECTHANDLE handle) override;
@@ -25,4 +25,7 @@ class UpsilonGCHandleManager : public IGCHandleManager
     virtual Object * InterlockedCompareExchangeObjectInHandle(OBJECTHANDLE handle, Object * object, Object * comparandObject) override;
     virtual HandleType HandleFetchType(OBJECTHANDLE handle) override;
     virtual void TraceRefCountedHandles(HANDLESCANPROC callback, uintptr_t param1, uintptr_t param2) override;
+
+public:
+	void ScanHandles(promote_func* pf, ScanContext* sc);
 };

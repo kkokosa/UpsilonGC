@@ -45,10 +45,12 @@ OBJECTHANDLE UpsilonGCHandleManager::CreateDuplicateHandle(OBJECTHANDLE handle)
 
 void UpsilonGCHandleManager::DestroyHandleOfType(OBJECTHANDLE handle, HandleType type)
 {
+	g_gcGlobalHandleStore->DestroyHandleOfType(handle, type);
 }
 
 void UpsilonGCHandleManager::DestroyHandleOfUnknownType(OBJECTHANDLE handle)
 {
+	g_gcGlobalHandleStore->DestroyHandleOfUnknownType(handle);
 }
 
 void UpsilonGCHandleManager::SetExtraInfoForHandle(OBJECTHANDLE handle, HandleType type, void * pExtraInfo)
@@ -106,3 +108,9 @@ HandleType UpsilonGCHandleManager::HandleFetchType(OBJECTHANDLE handle)
 void UpsilonGCHandleManager::TraceRefCountedHandles(HANDLESCANPROC callback, uintptr_t param1, uintptr_t param2)
 {
 }
+
+void UpsilonGCHandleManager::ScanHandles(promote_func* pf, ScanContext* sc)
+{
+	g_gcGlobalHandleStore->ScanHandles(pf, sc);
+}
+

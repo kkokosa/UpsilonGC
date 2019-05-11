@@ -315,9 +315,10 @@ Object * UpsilonGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t
 		gcInProgress = true;
 		ScanContext sc;
 		gcToCLR->SuspendEE(SUSPEND_FOR_GC);
-		//gcToCLR->DisablePreemptiveGC();
-		gcToCLR->GcScanRoots(UpsilonGCHeap::MarkStackRoots, 0, 0, &sc);
-		//gcInProgress = false;
+		printf("GCLOG: Scan stack roots\n");
+		gcToCLR->GcScanRoots(UpsilonGCHeap::MarkReachable, 0, 0, &sc);
+		printf("GCLOG: Scan handles roots\n");
+		handleManager->ScanHandles(UpsilonGCHeap::MarkReachable, &sc);
 		gcToCLR->RestartEE(true);
 	}
 	int beginGap = 24;
@@ -325,19 +326,20 @@ Object * UpsilonGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t
 	uint8_t* allocationStart = newPages + beginGap;
 	acontext->alloc_ptr = allocationStart + size;
 	acontext->alloc_limit = newPages + GrowthSize;
+	acontext->alloc_bytes += GrowthSize;
 	registerSegment(newPages);
-	printf("GCLOG: Segment crated %p-%p\r\n", acontext->alloc_ptr, acontext->alloc_limit);
+	printf("GCLOG: Segment crated %p-%p\n", acontext->alloc_ptr, acontext->alloc_limit);
 	//gcToCLR->EventSink()->FireGCCreateSegment_V1(newPages, growthSize, 0);
 	return (Object*)(allocationStart);
 }
 
-void UpsilonGCHeap::MarkStackRoots(Object** ppObject, ScanContext* sc, uint32_t flags)
+void UpsilonGCHeap::MarkReachable(Object** ppObject, ScanContext* sc, uint32_t flags)
 {
 	uint8_t* o = (uint8_t*)* ppObject;
 	if (o == 0)
 		return;
 	MethodTable* pMT = (*ppObject)->RawGetMethodTable();
-	printf("GCLOG: Reachable at %p MT %p\r\n", o, pMT);
+	printf("GCLOG: Reachable at %p MT %p (flags: %d)\n", o, pMT, flags);
 }
 
 // This variation is used in the rare circumstance when you want to allocate an object on the
@@ -346,6 +348,7 @@ Object * UpsilonGCHeap::AllocLHeap(size_t size, uint32_t flags)
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
     ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
+	printf("GCLOG: Special obj at %p size %llu (flags: %d)\n", address, size, flags);
     return (Object*)(address + 1);
 }
 

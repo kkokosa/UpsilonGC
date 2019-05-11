@@ -43,3 +43,42 @@ bool UpsilonGCHandleStore::EnumerateAsyncPinnedHandles(async_pin_enum_fn callbac
 {
     return false;
 }
+
+void UpsilonGCHandleStore::ScanHandles(promote_func* pf, ScanContext* sc)
+{
+	for (int i = 0; i < handlesCount; ++i)
+	{
+		if (handles[i] != nullptr)
+		{
+			pf((Object**)&handles[i], sc, 0);
+		}
+	}
+}
+
+void UpsilonGCHandleStore::DestroyHandleOfUnknownType(OBJECTHANDLE handle)
+{
+	for (int i = 0; i < handlesCount; ++i)
+	{
+		if (handles[i] == handle->unused)
+		{
+			handles[i] = nullptr;
+			break;
+		}
+	}
+}
+
+void UpsilonGCHandleStore::DestroyHandleOfType(OBJECTHANDLE handle, HandleType type)
+{
+	for (int i = 0; i < handlesCount; ++i)
+	{
+		if (handles[i] == handle->unused)
+		{
+			handles[i] = nullptr;
+			break;
+		}
+	}
+}
+
+
+
+

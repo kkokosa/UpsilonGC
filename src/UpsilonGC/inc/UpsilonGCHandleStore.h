@@ -15,4 +15,8 @@ public:
     virtual OBJECTHANDLE CreateDependentHandle(Object * primary, Object * secondary) override;
     virtual void RelocateAsyncPinnedHandles(IGCHandleStore* pTarget, void(*clearIfComplete)(Object*), void(*setHandle)(Object*, OBJECTHANDLE)) override;
     virtual bool EnumerateAsyncPinnedHandles(async_pin_enum_fn callback, void * context) override;
+    
+	void ScanHandles(promote_func* pf, ScanContext* sc);
+    void DestroyHandleOfType(OBJECTHANDLE handle, HandleType type);
+    void DestroyHandleOfUnknownType(OBJECTHANDLE handle);
 };

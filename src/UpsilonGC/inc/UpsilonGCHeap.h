@@ -2,15 +2,18 @@
 #include "debugmacros.h"
 #include "gcenv.base.h"
 #include "gcinterface.h"
+#include "UpsilonGCHandleManager.h"
 
 class UpsilonGCHeap : public IGCHeap 
 {
 private:
     IGCToCLR* gcToCLR;
+	UpsilonGCHandleManager* handleManager;
 public:
-	UpsilonGCHeap(IGCToCLR* gcToCLR)
+	UpsilonGCHeap(IGCToCLR* gcToCLR, UpsilonGCHandleManager* handleManager)
     {
         this->gcToCLR = gcToCLR;
+		this->handleManager = handleManager;
     }
 
     // Inherited via IGCHeap
@@ -93,7 +96,8 @@ public:
 
 	void registerSegment(uint8_t* new_pages);
 
-	static void MarkStackRoots(Object** ppObject, ScanContext* sc, uint32_t flags);
+	void ScanHandles(promote_func* pf, ScanContext* sc);
 
+	static void MarkReachable(Object** ppObject, ScanContext* sc, uint32_t flags);
 	static bool gcInProgress;
 };
