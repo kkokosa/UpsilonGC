@@ -100,6 +100,6 @@ public:
 	void ScanHandles(promote_func* pf, ScanContext* sc);
 
 	static void MarkReachableRoot(Object** ppObject, ScanContext* sc, uint32_t flags);
-	static void MarkObjectTransitively(Object* obj);
+	static void MarkObjectTransitively(Object* obj, ScanContext* sc, uint32_t flags);
 	static bool gcInProgress;
 };

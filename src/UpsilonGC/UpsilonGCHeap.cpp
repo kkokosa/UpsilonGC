@@ -432,10 +432,10 @@ void UpsilonGCHeap::MarkReachableRoot(Object** ppObject, ScanContext* sc, uint32
 		return;
 	MethodTable* pMT = (*ppObject)->GetMethodTable();	
 	printf("GCLOG: Reachable root at %p MT %p (flags: %d)\n", obj, pMT, flags);
-	//MarkObjectTransitively(obj);
+	//MarkObjectTransitively(obj, sc, flags);
 }
 
-void UpsilonGCHeap::MarkObjectTransitively(Object* obj)
+void UpsilonGCHeap::MarkObjectTransitively(Object* obj, ScanContext* sc, uint32_t flags)
 {
 	if (obj->IsMarked())
 	{
