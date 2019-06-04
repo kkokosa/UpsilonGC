@@ -94,6 +94,7 @@ public:
 	virtual void GetMemoryInfo(uint32_t * highMemLoadThreshold, uint64_t * totalPhysicalMem, uint32_t * lastRecordedMemLoad, size_t * lastRecordedHeapSize, size_t * lastRecordedFragmentation) override;
 	virtual void SetSuspensionPending(bool fSuspensionPending) override;
 	virtual void SetYieldProcessorScalingFactor(float yieldProcessorScalingFactor) override;
+	virtual bool IsInFrozenSegment(Object* object) override;
 
 	void registerSegment(uint8_t* new_pages);
 

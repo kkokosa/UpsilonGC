@@ -490,6 +490,11 @@ void UpsilonGCHeap::MarkObjectTransitively(Object* obj, ScanContext* sc, uint32_
 	}
 }
 
+bool UpsilonGCHeap::IsInFrozenSegment(Object* object)
+{
+	return false;
+}
+
 // This variation is used in the rare circumstance when you want to allocate an object on the
 // large object heap but the object is not big enough to naturally go there.
 Object * UpsilonGCHeap::AllocLHeap(size_t size, uint32_t flags)
@@ -607,6 +612,7 @@ void UpsilonGCHeap::SetSuspensionPending(bool fSuspensionPending)
 void UpsilonGCHeap::SetYieldProcessorScalingFactor(float yieldProcessorScalingFactor)
 {
 }
+
 
 void UpsilonGCHeap::registerSegment(uint8_t* new_pages)
 {
