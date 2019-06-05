@@ -1,14 +1,16 @@
+# Custom GCs in .NET
+
 Starting from .NET Core 2.0 coupling between Garbage Collector and the Execution Engine itself have been loosened. Prior to this version, the Garbage Collector code was pretty much tangled with the rest of the CoreCLR code. However, Local GC initiative in version 2.1 is already mature enough to start using it. The purpose of the exercise we are going to do is to prepare Zero Garbage Collector that replaces the default one. And then move to implement something more sophisticated.
 
 So this repository currently contains two so-called Zero GCs and one real-world Upsilon GC:
 
-# Upsilon GC
+## Upsilon GC
 
 The very first, real-world custom GC that will actually reclaim memory.
 
 TODO: write initial description
 
-# Zero Garbage Collector
+## Zero Garbage Collector
 
 Zero Garbage Collector is the simplest possible implementation that in fact does almost nothing. It only allows you to allocate objects, because this is obviously required by the Execution Engine. Created objects are never automatically deleted and theoretically, no longer needed memory is never reclaimed. Why one would be interested in such a simple GC implementation? There are at least two reasons:
 * it is an excellent basis for the development of your own Garbage Collection mechanism. It provides the necessary functionality to make runtime work properly and you can build on top of that.
