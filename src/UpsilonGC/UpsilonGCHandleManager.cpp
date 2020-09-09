@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#include "inc\UpsilonGCHandleManager.h"
-#include "inc\UpsilonGCHandleStore.h"
+#include "inc/UpsilonGCHandleManager.h"
+#include "inc/UpsilonGCHandleStore.h"
 
 UpsilonGCHandleStore* g_gcGlobalHandleStore;
 
@@ -24,7 +24,11 @@ IGCHandleStore * UpsilonGCHandleManager::GetGlobalHandleStore()
     return g_gcGlobalHandleStore;
 }
 
+#ifdef __linux__
+IGCHandleStore * UpsilonGCHandleManager::CreateHandleStore()
+#else
 IGCHandleStore * UpsilonGCHandleManager::CreateHandleStore(void * context)
+#endif
 {
     return nullptr;
 }

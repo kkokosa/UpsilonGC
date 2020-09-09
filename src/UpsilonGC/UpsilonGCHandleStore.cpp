@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "inc\UpsilonGCHandleStore.h"
+#include "inc/UpsilonGCHandleStore.h"
 
 int handlesCount = 0;
 OBJECTHANDLE handles[65535];

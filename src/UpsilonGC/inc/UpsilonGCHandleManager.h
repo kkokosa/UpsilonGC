@@ -1,4 +1,7 @@
 #pragma once
+#ifdef __linux__
+#include "pal.h"
+#endif
 #include "debugmacros.h"
 #include "gcenv.base.h"
 #include "gcinterface.h"
@@ -8,9 +11,13 @@ class UpsilonGCHandleManager : public IGCHandleManager
 	// Inherited via IGCHandleManager
     virtual bool Initialize() override;
     virtual void Shutdown() override;
-    virtual void * GetHandleContext(OBJECTHANDLE handle) override;
+    virtual void * GetHandleContext(OBJECTHANDLE handle);
     virtual IGCHandleStore * GetGlobalHandleStore() override;
+#ifdef __linux__
+    virtual IGCHandleStore * CreateHandleStore() override;
+#else
     virtual IGCHandleStore * CreateHandleStore(void * context) override;
+#endif
     virtual void DestroyHandleStore(IGCHandleStore * store) override;
     virtual OBJECTHANDLE CreateGlobalHandleOfType(Object * object, HandleType type) override;
     virtual OBJECTHANDLE CreateDuplicateHandle(OBJECTHANDLE handle) override;

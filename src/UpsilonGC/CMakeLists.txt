@@ -6,9 +6,9 @@ include_directories(
     ${CORECLR_SOURCE_PATH}/src/gc
 )
 
-add_library(UpsilonGC
+add_library(UpsilonGC SHARED
     UpsilonGC.cpp
-)
-
-target_link_libraries(UpsilonGC
+    UpsilonGCHeap.cpp
+    UpsilonGCHandleManager.cpp
+    UpsilonGCHandleStore.cpp
 )
