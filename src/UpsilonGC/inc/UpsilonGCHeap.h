@@ -1,7 +1,6 @@
 #pragma once
 #ifdef __linux__
-#include <stdio.h>
-#include "pal_mstypes.h"
+#include "pal.h"
 #endif
 #include "debugmacros.h"
 #include "gcenv.base.h"
