@@ -12,11 +12,11 @@ set(UPSILONGC_VERSION_STRING "${UPSILONGC_VERSION_MAJOR}.${UPSILONGC_VERSION_MIN
 add_definitions("-DUPSILONGC_VERSION_STRING=\"${UPSILONGC_VERSION_STRING}\"")
 
 # CoreCLR source path
-if(NOT EXISTS "${CORECLR_SOURCE_PATH}/CMakeLists.txt")
-    message(FATAL_ERROR "CORECLR_SOURCE_PATH ${CORECLR_SOURCE_PATH} doesn't exist!")
+if(NOT EXISTS "${CORECLR_FOR_CUSTOMGC}/CMakeLists.txt")
+    message(FATAL_ERROR "CORECLR_FOR_CUSTOMGC ${CORECLR_FOR_CUSTOMGC} doesn't exist!")
 endif()
 
-add_definitions("-DCORECLR_SOURCE_PATH=\"${CORECLR_SOURCE_PATH}\"")
+add_definitions("-DCORECLR_FOR_CUSTOMGC=\"${CORECLR_FOR_CUSTOMGC}\"")
 
 # Default build type
 if(NOT CMAKE_BUILD_TYPE)
@@ -34,7 +34,7 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 endif()
 
-include("${CORECLR_SOURCE_PATH}/configurecompiler.cmake")
+include("${CORECLR_FOR_CUSTOMGC}/configurecompiler.cmake")
 
 # Add subdirectories
 add_subdirectory(src)

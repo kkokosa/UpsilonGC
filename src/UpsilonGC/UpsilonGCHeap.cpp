@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "inc/UpsilonGCHeap.h"
-#ifdef __linux__
-#else
+#ifndef __linux__
 #include <stdio.h>
 #endif
 #include <cassert>
@@ -504,6 +503,7 @@ Object * UpsilonGCHeap::AllocLHeap(size_t size, uint32_t flags)
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
     ObjHeader* address = (ObjHeader*)malloc(sizeWithHeader * sizeof(char*));
+    memset(address, 0, sizeWithHeader * sizeof(char*));
 	printf("GCLOG: Special obj at %p size %llu (flags: %d)\n", address, size, flags);
     return (Object*)(address + 1);
 }
@@ -512,6 +512,7 @@ Object * UpsilonGCHeap::AllocAlign8(gc_alloc_context * acontext, size_t size, ui
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
     ObjHeader* address = (ObjHeader*)malloc(sizeWithHeader * sizeof(char*));
+    memset(address, 0, sizeWithHeader * sizeof(char*));
     return (Object*)(address + 1);
 }
 
@@ -604,7 +605,7 @@ void UpsilonGCHeap::ControlPrivateEvents(GCEventKeyword keyword, GCEventLevel le
 {
 }
 
-#ifdef __linux__
+#if GC_INTERFACE_MAJOR_VERSION >= 3
 void UpsilonGCHeap::GetMemoryInfo(uint64_t* highMemLoadThresholdBytes,
                                   uint64_t* totalPhysicalMemoryBytes,
                                   uint64_t* lastRecordedMemLoadBytes,
@@ -631,7 +632,7 @@ void UpsilonGCHeap::registerSegment(uint8_t* new_pages)
 	segments[segmentsCount++] = new_pages;
 }
 
-#ifdef __linux__
+#if GC_INTERFACE_MAJOR_VERSION >= 3
 uint64_t UpsilonGCHeap::GetTotalAllocatedBytes()
 {
     return 0;

@@ -13,7 +13,7 @@ class UpsilonGCHandleManager : public IGCHandleManager
     virtual void Shutdown() override;
     virtual void * GetHandleContext(OBJECTHANDLE handle);
     virtual IGCHandleStore * GetGlobalHandleStore() override;
-#ifdef __linux__
+#if GC_INTERFACE_MAJOR_VERSION >= 3
     virtual IGCHandleStore * CreateHandleStore() override;
 #else
     virtual IGCHandleStore * CreateHandleStore(void * context) override;

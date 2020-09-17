@@ -1,9 +1,9 @@
 include_directories(
-    ${CORECLR_SOURCE_PATH}/src/pal/inc
-    ${CORECLR_SOURCE_PATH}/src/inc
-    ${CORECLR_SOURCE_PATH}/src/pal/inc/rt
-    ${CORECLR_SOURCE_PATH}/src/gc/env
-    ${CORECLR_SOURCE_PATH}/src/gc
+    ${CORECLR_FOR_CUSTOMGC}/src/pal/inc
+    ${CORECLR_FOR_CUSTOMGC}/src/inc
+    ${CORECLR_FOR_CUSTOMGC}/src/pal/inc/rt
+    ${CORECLR_FOR_CUSTOMGC}/src/gc/env
+    ${CORECLR_FOR_CUSTOMGC}/src/gc
 )
 
 add_library(UpsilonGC SHARED

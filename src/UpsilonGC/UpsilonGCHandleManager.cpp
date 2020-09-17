@@ -24,7 +24,7 @@ IGCHandleStore * UpsilonGCHandleManager::GetGlobalHandleStore()
     return g_gcGlobalHandleStore;
 }
 
-#ifdef __linux__
+#if GC_INTERFACE_MAJOR_VERSION >= 3
 IGCHandleStore * UpsilonGCHandleManager::CreateHandleStore()
 #else
 IGCHandleStore * UpsilonGCHandleManager::CreateHandleStore(void * context)

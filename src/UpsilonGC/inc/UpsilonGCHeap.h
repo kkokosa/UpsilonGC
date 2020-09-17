@@ -31,7 +31,7 @@ public:
     virtual void TemporaryDisableConcurrentGC() override;
     virtual bool IsConcurrentGCEnabled() override;
     virtual HRESULT WaitUntilConcurrentGCCompleteAsync(int millisecondsTimeout) override;    // Use in native threads. TRUE if succeed. FALSE if failed or timeout
-#ifdef __linux__
+#if GC_INTERFACE_MAJOR_VERSION >= 3
     virtual bool FinalizeAppDomain(void* pDomain, bool fRunFinalizers);
 #else
     virtual bool FinalizeAppDomain(void* pDomain, bool fRunFinalizers) override;
@@ -98,7 +98,7 @@ public:
     virtual void UnregisterFrozenSegment(segment_handle seg) override;
     virtual void ControlEvents(GCEventKeyword keyword, GCEventLevel level) override;
     virtual void ControlPrivateEvents(GCEventKeyword keyword, GCEventLevel level) override;
-#ifdef __linux__
+#if GC_INTERFACE_MAJOR_VERSION >= 3
     virtual void GetMemoryInfo(uint64_t* highMemLoadThresholdBytes,
                                uint64_t* totalPhysicalMemoryBytes,
                                uint64_t* lastRecordedMemLoadBytes,
@@ -109,7 +109,7 @@ public:
     virtual void GetMemoryInfo(uint32_t * highMemLoadThreshold, uint64_t * totalPhysicalMem, uint32_t * lastRecordedMemLoad, size_t * lastRecordedHeapSize, size_t * lastRecordedFragmentation) override;
 #endif
 
-#ifdef __linux__
+#if GC_INTERFACE_MAJOR_VERSION >= 3
     virtual uint64_t GetTotalAllocatedBytes() override;
     virtual int GetLastGCPercentTimeInGC() override;
     virtual size_t GetLastGCGenerationSize(int gen) override;
