@@ -1,15 +1,17 @@
 // CustomGC.cpp : Defines the exported functions for the DLL application.
 //
 #include "stdafx.h"
-#include "inc\UpsilonGC.h"
-#include "inc\UpsilonGCHeap.h"
-#include "inc\UpsilonGCHandleManager.h"
+#include "inc/UpsilonGC.h"
+#include "inc/UpsilonGCHeap.h"
+#include "inc/UpsilonGCHandleManager.h"
 
 
 #ifdef _MSC_VER
 #define DLLEXPORT __declspec(dllexport)
 #else
+#ifndef DLLEXPORT
 #define DLLEXPORT __attribute__ ((visibility ("default")))
+#endif // DLLEXPORT
 #endif // _MSC_VER
 
 extern "C" DLLEXPORT HRESULT

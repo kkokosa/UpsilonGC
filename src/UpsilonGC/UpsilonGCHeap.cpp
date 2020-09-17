@@ -1,6 +1,8 @@
 #include "stdafx.h"
-#include "inc\UpsilonGCHeap.h"
+#include "inc/UpsilonGCHeap.h"
+#ifndef __linux__
 #include <stdio.h>
+#endif
 #include <cassert>
 #include "gcdesc.h"
 #include <cstddef>
@@ -414,7 +416,7 @@ Object * UpsilonGCHeap::Alloc(gc_alloc_context * acontext, size_t size, uint32_t
 		gcToCLR->RestartEE(true);
 	}
 	int beginGap = 24;
-	uint8_t* newPages = (uint8_t*)VirtualAlloc(NULL, GrowthSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+	uint8_t* newPages = (uint8_t*)VirtualAlloc(nullptr, GrowthSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
 	uint8_t* allocationStart = newPages + beginGap;
 	acontext->alloc_ptr = allocationStart + size;
 	acontext->alloc_limit = newPages + GrowthSize;
@@ -500,7 +502,8 @@ bool UpsilonGCHeap::IsInFrozenSegment(Object* object)
 Object * UpsilonGCHeap::AllocLHeap(size_t size, uint32_t flags)
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
-    ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
+    ObjHeader* address = (ObjHeader*)malloc(sizeWithHeader * sizeof(char*));
+    memset(address, 0, sizeWithHeader * sizeof(char*));
 	printf("GCLOG: Special obj at %p size %llu (flags: %d)\n", address, size, flags);
     return (Object*)(address + 1);
 }
@@ -508,7 +511,8 @@ Object * UpsilonGCHeap::AllocLHeap(size_t size, uint32_t flags)
 Object * UpsilonGCHeap::AllocAlign8(gc_alloc_context * acontext, size_t size, uint32_t flags)
 {
     int sizeWithHeader = size + sizeof(ObjHeader);
-    ObjHeader* address = (ObjHeader*)calloc(sizeWithHeader, sizeof(char*));
+    ObjHeader* address = (ObjHeader*)malloc(sizeWithHeader * sizeof(char*));
+    memset(address, 0, sizeWithHeader * sizeof(char*));
     return (Object*)(address + 1);
 }
 
@@ -601,7 +605,16 @@ void UpsilonGCHeap::ControlPrivateEvents(GCEventKeyword keyword, GCEventLevel le
 {
 }
 
+#if GC_INTERFACE_MAJOR_VERSION >= 3
+void UpsilonGCHeap::GetMemoryInfo(uint64_t* highMemLoadThresholdBytes,
+                                  uint64_t* totalPhysicalMemoryBytes,
+                                  uint64_t* lastRecordedMemLoadBytes,
+                                  uint32_t* lastRecordedMemLoadPct,
+                                  size_t* lastRecordedHeapSizeBytes,
+                                  size_t* lastRecordedFragmentationBytes)
+#else
 void UpsilonGCHeap::GetMemoryInfo(uint32_t * highMemLoadThreshold, uint64_t * totalPhysicalMem, uint32_t * lastRecordedMemLoad, size_t * lastRecordedHeapSize, size_t * lastRecordedFragmentation)
+#endif
 {
 }
 
@@ -618,3 +631,24 @@ void UpsilonGCHeap::registerSegment(uint8_t* new_pages)
 {
 	segments[segmentsCount++] = new_pages;
 }
+
+#if GC_INTERFACE_MAJOR_VERSION >= 3
+uint64_t UpsilonGCHeap::GetTotalAllocatedBytes()
+{
+    return 0;
+}
+
+int UpsilonGCHeap::GetLastGCPercentTimeInGC()
+{
+    return 0;
+}
+
+size_t UpsilonGCHeap::GetLastGCGenerationSize(int gen)
+{
+    return 0;
+}
+
+void UpsilonGCHeap::DiagWalkObject2(Object* obj, walk_fn2 fn, void* context)
+{
+}
+#endif

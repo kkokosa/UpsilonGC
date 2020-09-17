@@ -11,7 +11,9 @@
 // * DACCESS_COMPILE blocks removed
 
 #pragma once
+#ifndef __linux__
 #include <cstdint>
+#endif
 
 #ifdef BIT64
 typedef uint32_t HALF_SIZE_T;
